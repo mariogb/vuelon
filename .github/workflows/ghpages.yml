@@ -24,6 +24,7 @@ jobs:
       - name: Build
         run: npm run build        
       - name: Push changes
-        uses: ptienchuan/deploy-github-pages-action@master
+        uses:  mariogb/actionvuelon@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
