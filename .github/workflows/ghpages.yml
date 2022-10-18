@@ -25,6 +25,9 @@ jobs:
         run: npm run build        
       - name: Push changes
         uses:  mariogb/actionvuelon@master
+        with: 
+          username: mariogb
+          reponame: vuelon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
