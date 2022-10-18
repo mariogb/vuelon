@@ -28,6 +28,7 @@ jobs:
         with: 
           username: mariogb
           reponame: vuelon
+          token: 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
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
