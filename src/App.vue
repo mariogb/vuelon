@@ -434,10 +434,13 @@ option {
     .hm{
       display: none;
     }
+    button{
+      font-size: 22;
+    }
 
 }
 @media screen and (max-height: 600px) {
-
+  
 }
 
 </style>
