@@ -144,15 +144,15 @@ html,body{
   padding: 0;
 }
 
-@first-color: #4e1728;
-@second-color: #fa8383;
-@third-color: #6b866a;
+@first-color: #4E1728;
+@second-color: #64379F;
+@third-color: #9854cb;
 @fourth-color: #ffe4b3;
 
 @main-background: darkcyan;
 @main-color: brown;
 
-@primary: #42a5f5;
+@primary: #27104e;
 @secondary: #ba68c8;
 @error: #d32f2f;
 @warning: #ed6c02;
