@@ -67,10 +67,8 @@
                     v-bind:checked="\ ztatChilds !== undefined &&\ ztatChilds[p000.dc0.n] !== undefined &&\ ztatChilds[p000.dc0.n]['enable'] === true\ ",
                     v-bind:name="p000.dc0.n"
                   )
-                  label.menu-col-e-vis(v-bind:for="p000.dc0.n")
-                    | {{
-                    | p000.dc0.n
-                    | }}
+                  label.menu-col-e-vis(v-bind:for="p000.dc0.n")  {{p000.dc0.n}}
+                  small {{p000.level}}
 
 
 </template>

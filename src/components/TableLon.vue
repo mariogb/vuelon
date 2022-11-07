@@ -129,11 +129,13 @@
                 v-bind:key="'tt' + p000.dcp",
                 v-bind:data-label="p000.dc0.n"
               ) 
+           
                 TdsZtat(
                   v-bind:objKey="objKey",
                   v-bind:dc="p000.dc0.t",
                   v-bind:dc_n="p000.dc0.n",
-                  v-bind:e0_id="e0.id"
+                  v-bind:e0_id="e0.id",
+                  v-bind:keyPath="p000.dc0.keyPath"
                 )
 
           td.actions(

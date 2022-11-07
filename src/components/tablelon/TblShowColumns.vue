@@ -63,8 +63,8 @@
             template(v-slot:body="p000")
               .menu-col-e-vis-th-otm
                 .dd onRelation {{ p000.dc0.onRelation }}
-                .ee modelo {{ modelo.dc }}
-                label.menu-col-e-vis(v-bind:for="'ckzt_'+p000.dc0.keyPath") {{ p000.dc0.keyPath}}
+                .ee modelo {{ modelo.dc }}                                
+                label.menu-col-e-vis(v-bind:for="'ckzt_'+p000.dc0.keyPath") {{ p000.dc0.keyPath}}                  
                   input(
                     type="checkbox",
                     v-on:change="doChangeZ($event, p000, modelo.dc)",

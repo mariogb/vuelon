@@ -1,13 +1,13 @@
 
 <template>
 <template v-for="(dc0, dcp) in modelo.otm">
-    <slot name="body" :dcp="dcp" :dc0="dc0"></slot>
+    <slot name="body" :dcp="dcp" :dc0="dc0" :level="1"></slot>
 </template>   
 <template v-for="(dc0, dcp) in modelo.otm2">
-    <slot name="body" :dcp="dcp" :dc0="dc0"></slot>
+    <slot name="body" :dcp="dcp" :dc0="dc0" :level="2"></slot>
 </template>  
 <template v-for="(dc0, dcp) in modelo.otm3">
-    <slot name="body" :dcp="dcp" :dc0="dc0"></slot>
+    <slot name="body" :dcp="dcp" :dc0="dc0" :level="3"></slot>
 </template>  
 </template>
 <script lang="ts">

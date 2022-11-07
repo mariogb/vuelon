@@ -1,6 +1,5 @@
 <template>
-  
-  <div v-if="ztatOtmVal && ztatOtmVal[key0]">
+  <div v-if="ztatOtmVal && key0 && ztatOtmVal[key0]">
     {{ztatOtmVal[key0]['count']}}     
   </div>
   <div v-else>
@@ -17,7 +16,9 @@ export default defineComponent({
     dc: String,
     dc_n:String,
     e0_id:Number,
-    objKey:String
+    objKey:String,
+    keyPath:String
+
   },
   name: "tds-ztat",
   setup(props, context) {
@@ -26,13 +27,17 @@ export default defineComponent({
     const { ztatOtmVal } = tabLonOp(props, context);
 
     const key0 = computed(()=>{
-      return `${props.dc_n}:${props.e0_id}`
+      return `${props.keyPath}:${props.e0_id}`
+    })
+
+    const keyPath = computed(()=>{
+      return props.keyPath
     })
 
     return {
       modelo,
       dc,
-      ztatOtmVal,key0,objKey
+      ztatOtmVal,key0,objKey,keyPath
     };
   },
 });

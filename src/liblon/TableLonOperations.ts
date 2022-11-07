@@ -178,15 +178,27 @@ export default function (props: any, context: any) {
 
 
     const doCalculoParaObtener_dcpn_dcch = (p000: any, dc: string) => {
-        const or2 = p000.dc0.onRelation2;
-        if (or2) {
-          return or2;
+        // const or2 = p000.dc0.onRelation2;
+        // if (or2) {
+        //   return or2;
+        // }
+        const level = p000.level*1;
+        const dc0 = p000.dc0;
+        if(level===2){
+            const or2 = dc0.onBiRelation;
+            if (or2) {
+              return or2;
+            }
+            return dc;
         }
-        const or1 = p000.dc0.onRelation;
+
+        const or1 = dc0.onRelation;
         if (or1) {
           return or1;
         }
         return dc;
+
+
         //p000.dc0.onRelation ? p000.dc0.onRelation : modelo.dc
       };
 

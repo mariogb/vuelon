@@ -940,12 +940,14 @@ class DCZtatStore extends Store<DcZtatModel>{
 
         const h = `${h00}/${payload.dcch}/lztat`
         const s0 = this
-        const keyPath = payload.keyPath
-        const objKey = payload.objKey
+        const keyPath = payload['keyPath']
+        const objKey = payload['objKey']
         const lp: any[] = this.doQryStr(payload.params)
         return new Promise((resolve, reject) => {
             const headers: any = buildHeaders();
             Axios.get(h + "?" + lp.join("&"), { headers: headers }).then(function (response) {
+                
+                console.log("rrr")
                 const data: any = response.data
                 const m00: any = s0.state.mapa
                 if (m00[objKey] === undefined) {
@@ -954,10 +956,12 @@ class DCZtatStore extends Store<DcZtatModel>{
                 const l_ = mapToListLon(data)
                 const m: any = {}
                 l_.forEach((e0: { id: number }) => {
-                    const k00: string | number = e0[payload.dcpn_dcch + "_id"] !== undefined ? e0[payload.dcpn_dcch + "_id"] : "gral"
+                    const k00: string | number = e0[payload['dcpn_dcch'] + "_id"] !== undefined ? e0[payload.dcpn_dcch + "_id"] : "gral"
                     m[k00] = e0
                 })
                 m00[objKey][keyPath] = { m: m, enable: true, keyPath: keyPath, dcch: payload.dcch, dcpn_dcch: payload.dcpn_dcch }
+                console.log(objKey,keyPath)
+                console.log(m00)
                 resolve(1)
             }).catch(function (e) {
                 reject(e)
