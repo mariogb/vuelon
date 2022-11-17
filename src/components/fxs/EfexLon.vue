@@ -105,7 +105,7 @@ div.efex {
   width: 100vw;
   height: 100vh;
   position: absolute;
-  background: #2d1818;
+  background: var(--primary-dark);
   z-index: 2;
 }
 </style>

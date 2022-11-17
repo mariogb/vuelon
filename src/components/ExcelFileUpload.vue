@@ -5,8 +5,7 @@
   .form-imp-excel-body
     .template-xls
       p.info Descargar archivo plantilla para importación
-      button(v-on:click="getExcelTemplate()") xls tmplate
-
+      button(v-on:click="getExcelTemplate()") xls tmplate    
     form.form-files(enctype="multipart/form-data")
       .the-form-box 
         input.input-file(
@@ -17,25 +16,25 @@
           v-on:change="dd()"
         )
         button(type="button", v-on:click="uploadFile()") Subir
-      .the-error(v-if="error00")
+      .the-info
+        p.results - {{results}}
+        p.error00-msg {{error00.ERROR}}  
+        p.error00-msg {{error00.message}} 
         p.error00-msg {{error00.msg}}  
         p.error00-detail(v-show="error00.detail")
           span Detail: 
           span {{error00.detail}}  
+        p.error00-table(v-show="error00.table")
+          span Table: 
+          span {{error00.table}}            
 </template>
 <script lang="ts">
-import {
-  ref,
-  
-  defineComponent,
-  Ref,
-  watch,
-} from "vue";
+import {ref, defineComponent, Ref} from "vue";
 import { downLoadTemplateFile, sendFiles } from "../store/DCModelStore";
 
 export default defineComponent({
   name: "excel-file-upload",
-
+  emits: ["doList"],
   props: {
     dc: String,
     objKey: String,
@@ -46,7 +45,7 @@ export default defineComponent({
     const upload_file:Ref<HTMLInputElement|null> = ref(null);
 
     const error00 = ref({});
-    const results = ref([]);
+    const results = ref("");
 
     const estatus = ref({ value: "ready", label: "" });
 /*
@@ -62,11 +61,10 @@ export default defineComponent({
     });
     */
 
-   watch(upload_file,()=>{
-     console.log("upload_file",upload_file)
-   })
+
 
     const filesUploaded:Ref<any[]> = ref([]);
+
     const uploadFile = () => {
       const ufv = upload_file.value
       if(!ufv){
@@ -99,12 +97,14 @@ export default defineComponent({
 
       sendFiles(payload)
         .then((r) => {
+          console.log(r)
           const ufv = upload_file.value
           if(ufv){
             ufv.value = "";
           }          
           estatus.value = { value: "ready", label: "" };
-          results.value = r;
+          results.value = "Data uploaded"
+          context.emit("doList");
         })
         .catch((error) => {         
           if (error.response !== undefined) {
@@ -146,7 +146,7 @@ export default defineComponent({
 
 
 
-    return { upload_file, uploadFile, dd,getExcelTemplate,error00 };
+    return { upload_file, uploadFile, dd,getExcelTemplate,error00,results };
   },
 });
 </script> 
@@ -180,7 +180,7 @@ export default defineComponent({
   border: solid 1px aqua;
 }
 
-.the-error{
+.the-info{
 margin: 12px;
 padding: 24px;
 background: bisque;

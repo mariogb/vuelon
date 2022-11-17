@@ -14,8 +14,12 @@
     template(v-if="modeloDC2")
       h3 {{ losDcs.dcpn2 }}
       DCLon(v-bind:dc="modeloDC2.dc", v-bind:objKey="'m_' + losDcs.dcpn2")
+.ar-1  
+    button(v-on:click="chView='c3'" ) c3
+    button(v-on:click="chView='c4'" ) c4
+.cmxm-ch  
 
-  .c3
+  .c3(v-show="chView==='c3'")
     template(v-if="vv")
       h4 {{ losDcs.dcch }}
       DCLon(
@@ -30,7 +34,7 @@
         v-bind:parentOnRelation2="parentOnRelation2.onRelation",
         v-bind:parentDcMyName2="parentOnRelation2.n"
       )
-  .c4
+  .c4(v-show="chView==='c4'")
     template(v-if="vv")
       MxMLon(
         v-bind:dc="losDcs.dcch",
@@ -48,7 +52,7 @@
   .f2
 </template>
 <script lang="ts">
-import { computed, defineAsyncComponent, defineComponent } from "vue";
+import { computed, defineAsyncComponent, defineComponent ,ref} from "vue";
 import { useRoute } from "vue-router";
 import { dcDataStore, dcModelStore } from "../store/DCModelStore";
 
@@ -60,6 +64,9 @@ export default defineComponent({
   components: { DCLon, MxMLon },
   setup(props, context) {
     const route = useRoute();
+
+  const chView = ref("c4")
+
     const losDcs = computed(() => {
       return {
         dcpn1: route.params.dcpn1,
@@ -196,7 +203,7 @@ export default defineComponent({
       m_dc1,
       m_dc2,
       currentItemDC1,
-      currentItemDC2,vv
+      currentItemDC2,vv,chView
     };
   },
 });
@@ -205,15 +212,13 @@ export default defineComponent({
 .cmxm {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 4fr 4fr 1fr;
+  grid-template-rows: 0.1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
    gap: 3px 6px; 
   grid-template-areas:
     "h1 h2"
     "c1 c2"
-    "c3 c4"
-    "f1 f2";
 }
 
 .h1 {

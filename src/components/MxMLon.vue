@@ -145,6 +145,16 @@ export default defineComponent({
         ] = `Contrato compra de ${item0["thirdPerson_pname"]} ${item0["departament_pname"]} ${item0["baseTimePeriod_pkey"]}   `;
       }
 
+
+      if (dc.value === "fligth") {
+        item0["pkey"] = `${item0["fromAirport_pkey"]}:${item0["toAirport_pkey"]}`;
+        item0[
+          "pname"
+        ] = `Vuelo de ${item0["fromAirport_pname"]} a ${item0["toAirport_pname"]}    `;
+      }
+
+
+
       //departamentUserLon
 
       let payload = {

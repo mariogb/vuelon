@@ -1,12 +1,12 @@
 <template lang="pug">
 .simple-dc(
-  v-bind:class="{ 'simple-dc-cols': ui.tipo === 'col', 'simple-dc-rows': ui.tipo === 'row' }"
+  v-bind:class="{ 'simple-dc-cols': ui.tipo === 'row', 'simple-dc-rows': ui.tipo === 'col' }"
 )
   .col-aa
     h2.simple-dc-head(v-bind:class="dc")
       span.dc00 {{ msgUI(dc) }}
     button.hm(v-on:click="ui.tipo = 'row'") r
-    button.hm(v-on:click="ui.tipo = 'col'") c
+    button.hm(v-on:click="ui.tipo = 'col'") c    
     d-c-lon(v-bind:dc="dc", v-bind:objKey="dc")
   .col-bb(v-if="modelo && modelo.otm && m_dc && m_dc.l && m_dc.l.length > 0") 
     .otm
@@ -22,7 +22,7 @@
         .bx-dclon(
           v-if="currentItem !== undefined && viewOptions.showChild[p_ch.n] === true"
         ) 
-          h3.sub-dc * {{ p_ch.n }} {{ p_ch }}
+          h3.sub-dc * {{ p_ch.n }}
           router-link.button(
             :to="{ name: 'simpledc', params: { dc: p_ch.t } }"
           ) Ir
@@ -43,22 +43,22 @@
                 button(
                   v-if="p_ch2.from === p_ch.n",
                   :key="'btn-' + dc + '_' + p_ch2.n",
-                  v-on:click="changeShowChild(p_ch2.n)",
-                  v-bind:class="{ 'is-open': viewOptions.showChild[p_ch2.n] === true }"
-                ) {{ p_ch2.n }}
+                  v-on:click="changeShowChild(p_ch.n+':'+p_ch2.n)",
+                  v-bind:class="{ 'is-open': viewOptions.showChild[p_ch.n+':'+p_ch2.n] === true }"
+                ) {{ p_ch2.n }} {{p_ch.n}} 
             template(v-for="p_ch2 in modelo.otm2", :key="dc + '_' + p_ch2.n" ) 
               transition(name="fade0") 
                 
                 .bx-dclon(
-                  v-if="currentItem !== undefined && viewOptions.showChild[p_ch2.n] === true && p_ch2.from === p_ch.n && canViewMDc(dc + '_' + p_ch.n)"
+                  v-if="currentItem !== undefined && viewOptions.showChild[p_ch.n+':'+p_ch2.n] === true && p_ch2.from === p_ch.n && canViewMDc(dc + '_' + p_ch.n)"
                 ) 
-                  h4.sub-dc ** {{ p_ch2.n }} -{{ p_ch2 }} 
+                  h4.sub-dc ** {{ p_ch2.n }}
                   d-c-lon(
                       v-bind:dc="p_ch2.t",
                       v-bind:objKey="dc + '_' + p_ch.n+ '_' + p_ch2.n",
                       v-bind:parentDc="p_ch.t",
                       v-bind:parentObjKey="dc + '_' + p_ch.n",
-                      v-bind:parentOnRelation="p_ch2.onRelation2 ? p_ch2.onRelation2 : p_ch.t",
+                      v-bind:parentOnRelation="p_ch2.onRelation ? p_ch2.onRelation : p_ch.t",
                       v-bind:parentDcMyName="p_ch2.n"
                   )
 </template>
@@ -94,7 +94,7 @@ export default defineComponent({
 
 
 
-    const ui = ref({ tipo: "col" });
+    const ui = ref({ tipo: "row" });
     const currentItem = computed(() => {
       const dc:any = route.params.dc
       return dcDataStore.getState().currentItems[dc];
@@ -106,20 +106,6 @@ export default defineComponent({
         return dcModelStore.getState().mapa[dc];
       }
     });
-
-    // const model_tree = computed(() => {
-    //   const m0 = dcModelStore.state.mapa[route.params.dc];
-    //   if (m0) {
-    //     const otm = m0.otm;
-    //     if(otm){
-    //       const mapa = dcModelStore.state.mapa
-    //       otm.forEach((p_ch)=>{
-
-    //       })
-    //     }
-    //   }
-
-    // });
 
     const m_dc = computed(() => {
       const dc:any = route.params.dc
@@ -189,10 +175,10 @@ export default defineComponent({
   background: #76bad53d;
   padding-top: 2px;
   padding-right: 1.5em;
-  padding-bottom: 0px;
-  padding-left: 1.5em;
+  padding-bottom: 8px;
   margin: 8px;
   font-size: 0.8em;
+  display: inline-block;
 }
 
 .otm2 {

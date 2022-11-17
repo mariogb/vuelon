@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.menu-main
+nav.menu-main.secondary-dark
   .hover-lon-p
     button.open-menu(v-on:click="ocm('m1')") LIST DCS
     ul.menu1.mm.hover-lon-ch-sh(v-show="UI.openedMenu ==='m1'")
@@ -125,8 +125,7 @@ export default defineComponent({
 </script> 
 <style>
 
-.menu-main{
-  background: var(--fourth-color);
+.menu-main{  
   padding: 0px;
   margin: 0px;
 }

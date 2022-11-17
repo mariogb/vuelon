@@ -69,5 +69,12 @@ router.beforeEach((to, from) => {
     }
     return true
 })
+router.afterEach((to, from) => {
+    if (to.name === "simpledc") {
+        document.title="SIMPLEDC "+to.params['dc'];
+    }
+    return true
+})
+
 
 export default router

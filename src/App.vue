@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header primary-dark">
     <a href="#" class="logo logolon">VXLON</a>
     <div v-if="isAuth" class="menu-auth-usr">
       {{ typeLon }}
@@ -45,9 +45,9 @@
   <div v-if="isAuth" class="chats0" v-bind:class="{ 'chats-min': chatMin }">
     <simple-chat v-bind:channel="'wrtc'" v-bind:channelid="1"></simple-chat>
   </div>
-  <footer class="footer">
+  <footer class="footer primary-dark">
     <div>
-      <div v-show="showConfigBack" class="conf-back">
+      <div v-show="showConfigBack">
         <button v-on:click="enableHttpSchema(true)">HTTPS</button>
         <button v-on:click="enableHttpSchema(false)">HTTP</button>
         <label for="server">server</label>
@@ -144,12 +144,12 @@ html,body{
   padding: 0;
 }
 
-@first-color: #4e1728;
-@second-color: #fa8383;
-@third-color: #6b866a;
-@fourth-color: #ffe4b3;
+@first-color: #3F7CAC;
+@second-color: #95AFBA;
+@third-color: #BDC4A7;
+@fourth-color: #D5E1A3;
 
-@main-background: darkcyan;
+
 @main-color: brown;
 
 @primary: #42a5f5;
@@ -164,19 +164,20 @@ html,body{
 &:root {
   --first-color: @first-color;
   --second-color: @second-color;
-  --third-color: @third-color;
-
+  --third-color: ligthen(@third-color,2%);
   --fourth-color: @fourth-color;
-  --main-background: @main-background;
+
   --main-color: @main-color;
 
   --primary-ligth: lighten(@primary, 15%);;
-  --primary: @primary
+  --primary: darken(@primary, 3%);
   --primary-dark: darken(@primary, 30%);
 
   --secondary-ligth: lighten(@secondary, 15%);
-  --secondary: @secondary;
+  --secondary: darken(@secondary,3%);
   --secondary-dark: darken(@secondary, 30%);
+
+  
 
   --error-light:lighten(@error, 15%);
   --error: @error
@@ -196,9 +197,9 @@ html,body{
 
   //--table-tr-default-
   --table-background:lighten(@third-color, 46%);
-  --table-oddrow-color: spin(lighten(@third-color, 55%),45%);
-  --table-current-color: spin(lighten(@third-color, 28%),38);
-  --table-thead-background: spin(darken(@third-color,20%), 120);
+  --table-oddrow-color: lighten(@secondary, 25%);
+  --table-current-color:darken(@third-color,2%) ;
+  --table-thead-background: darken(@secondary,20%);
   --table-thead-color: lighten(spin(@third-color, 120),28%);
 
   --font-size-default:@font-size-default;
@@ -206,12 +207,14 @@ html,body{
 
 .primary {
   background: var(--primary);
+
 }
 .primary-main {
   background: var(--primary-main);
 }
 .primary-dark {
   background: var(--primary-dark);
+  color: #fff;
 }
 .secondary {
   background: var(--secondary);
@@ -221,6 +224,7 @@ html,body{
 }
 .secondary-dark {
   background: var(--secondary-dark);
+  color: #fff;
 }
 .error-light {
   background: var(--error-light);
@@ -332,9 +336,7 @@ option {
   grid-area: main;
 }
 .header,.footer {
-  background: @first-color;  
-  color: lighten(@third-color, 46%);
- 
+   
   a{
     &:visited{
       color: lighten(@third-color, 46%);
@@ -343,7 +345,10 @@ option {
   }
 }
 
-
+.debug{
+  background: #03e9f4;
+  display: none;
+}
 
 .chats {
   border: 1px solid var(--m2-bg-color);
@@ -422,9 +427,7 @@ option {
   
 }
 
-.conf-back{
-  background: #03e9f4;
-}
+
 
 @media screen and (max-width: 600px) {
     .main{

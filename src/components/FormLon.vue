@@ -1,8 +1,10 @@
 <template lang="pug">
 div
-  small {{ parentOnRelation }}
+  .debug
+    small parentOnRelation
+      | {{ parentOnRelation }}
+    button(v-on:click="test_theform()") test
   .fl-pdc(v-if="losMto", ref="theformp")
-    
     template(v-for="p in losMto", :key="'d-' + p.n")
       .row.f-mto(v-if="p.setBySys === undefined")
         div
@@ -57,37 +59,34 @@ div
           small.pkey {{ item0Parent[p.n]['pkey'] }}
           | ]
           button.btn-rm-parent-value(v-on:click="rmParent(p.n)") X
-  div
-    span parentOnRelation
-      | {{ parentOnRelation }}
-    button(v-on:click="test_theform()") test 
+
     hr
     small parentObjKey {{ parentObjKey }}
   form(v-if="modelo !== undefined", ref="theform", onsubmit="return false;")
     fieldset
       legend Generales
+      .f-ps
+        div
+          label.ps.pkey
+            span *
+            span pkey
+        div 
+          input(
+            name="i-pkey",
+            type="text",
+            v-model="item0['pkey']",
+            required="true"
+          )
+
+      .f-ps(v-if="elPc")
+        div
+          label.ps.pc
+            span *
+            span {{ elPc }}
+        div 
+          input(v-bind:name="'i-' + elPc", type="text", v-model="item0[elPc]")
+
       .form-lon-container
-        .f-ps
-          div
-            label.ps.pkey
-              span *
-              span pkey
-          div 
-            input(
-              name="i-pkey",
-              type="text",
-              v-model="item0['pkey']",
-              required="true"
-            )
-
-        .f-ps(v-if="elPc")
-          div
-            label.ps.pc
-              span *
-              span {{ elPc }}
-          div 
-            input(v-bind:name="'i-' + elPc", type="text", v-model="item0[elPc]")
-
         template(
           v-for="p in losPs.filter((p) => { return p.n !== 'pkey' && p.n !== elPc; })",
           :key="'d-' + p.n"
@@ -154,16 +153,19 @@ div
                   v-model="item0[p.n]",
                   v-bind:name="'i-' + p.n"
                 )
-    div(
-      style="background: pink; font-size: 0.8em; width: 260px; overflow: auto"
-    )
+    .debug 
       | {{ item0 }}
-    span {{ err0 }}
+    
+    .error(
+      v-if="err0 && err0.remoteError",
+      style="background: orange; font-size: 0.8em; width: 260px; overflow: auto"
+    )
+      | {{ err0.remoteError }}
     .error(
       v-if="err0 && err0.localVerify",
       style="background: orange; font-size: 0.8em; width: 260px; overflow: auto"
     )
-      | {{ err0 }}
+      | {{ err0.localVerify }}
     .form-btns
       input.form-lon-submit(
         type="submit",
@@ -239,20 +241,18 @@ export default defineComponent({
       theformp,
     } = formOps(props, context);
 
-    const test_theform = ()=>{
-      const v = theform.value
-      if(v){
-        const elements:any = v['elements']
-        console.log(elements)
-        if(elements){          
-          for(var p in elements){
-            console.log(p,elements[p])
+    const test_theform = () => {
+      const v = theform.value;
+      if (v) {
+        const elements: any = v["elements"];
+        console.log(elements);
+        if (elements) {
+          for (var p in elements) {
+            console.log(p, elements[p]);
           }
         }
       }
-      
-
-    }
+    };
 
     return {
       dc,
@@ -287,7 +287,8 @@ export default defineComponent({
       losMto,
       losPs,
       losPsBool,
-      theform,test_theform,
+      theform,
+      test_theform,
       theformp,
       elPc,
     };
@@ -453,7 +454,6 @@ button.btn-show-form-body {
   margin: 4px;
   padding: 3px;
   background: #0059ff;
- 
 
   z-index: 2000;
   border: 2px outset rgba(54, 14, 230, 0.767);

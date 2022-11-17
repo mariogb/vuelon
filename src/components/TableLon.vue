@@ -329,7 +329,7 @@ export default {
   overflow: auto;
   max-width: 100vw;
   padding-bottom: 18px;
-  background: #ccc;
+  
 
   .tbl-lon {
     white-space: nowrap;

@@ -64,8 +64,6 @@
       </div>
     </div>
 
-    ------1 {{parentOnRelation}}--2 {{parentOnRelation2}}--
-
     <my-win
       v-bind:myUI="myUI"
       v-bind:fnCb="showSubWin"
@@ -107,12 +105,13 @@
       v-bind:myUI="myUI"
       v-bind:fnCb="showSubWin"
       v-bind:subWin="'viewUpXlsForm'"
-      v-bind:label="'Upload from excel file '+1 "
+      v-bind:label="'Upload from excel file '"
     >
       <template v-slot:content0>
         <excel-file-upload
           v-bind:dc="dc"
           v-bind:objKey="objKey"
+          v-on:doList="doList()"
         ></excel-file-upload>
       </template>
     </my-win>
@@ -470,6 +469,7 @@ export default {
 .dc-lon-comp {
   position: relative;
   border-radius: 4px;
+  margin-left: 22px;
 }
 
 .dccomp_body {
@@ -478,11 +478,6 @@ export default {
 
 .dc-btns-cont {
   display: flex;
-}
-
-.dc-btns-cont button {
-   color: var(--third-color); 
-  background:  var(--fourth-color);
 }
 
 .dc-btns {
