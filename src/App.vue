@@ -152,7 +152,7 @@ html,body{
 
 @main-color: brown;
 
-@primary: #42a5f5;
+@primary: #27104e;
 @secondary: #ba68c8;
 @error: #d32f2f;
 @warning: #ed6c02;
