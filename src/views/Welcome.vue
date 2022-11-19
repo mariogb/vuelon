@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.menu-main.secondary-dark
+nav.menu-main.second
   .hover-lon-p
     button.open-menu(v-on:click="ocm('m1')") LIST DCS
     ul.menu1.mm.hover-lon-ch-sh(v-show="UI.openedMenu ==='m1'")

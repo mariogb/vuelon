@@ -13,14 +13,14 @@
 
       <div class="dc-btns" v-show="responiveShowBtns === true">
         <button class="btn-list" v-on:click="doList()" title="List records">
-          L
+          List
         </button>
         <button
           class="btn-add"
           v-on:click="showSubWin('viewForm')"
           title="Add new record"
         >
-          A
+          Add
         </button>
 
         <button
@@ -29,28 +29,28 @@
           v-on:click="showSubWin('viewFilter')"
           title="Filter records"
         >
-          F
+          Filter
         </button>
         <button
           class="btn-import-xls"
           v-on:click="showSubWin('viewUpXlsForm')"
           title="Import from Excel file"
         >
-          Im
+          Import
         </button>
         <button
           class="btn-download-xls"
           v-on:click="downloadExcelFile(0)"
           title="Download in excel file"
         >
-          Dn
+          Download
         </button>
         <button
           class="btn-download-xls"
           v-on:click="downloadExcelFile('y')"
           title="Download in excel file with id info"
         >
-          DnId
+        Download w/Ids
         </button>
 
         <TblShowColumns
@@ -105,13 +105,12 @@
       v-bind:myUI="myUI"
       v-bind:fnCb="showSubWin"
       v-bind:subWin="'viewUpXlsForm'"
-      v-bind:label="'Upload from excel file '"
+      v-bind:label="'Upload from excel file '+1 "
     >
       <template v-slot:content0>
         <excel-file-upload
           v-bind:dc="dc"
           v-bind:objKey="objKey"
-          v-on:doList="doList()"
         ></excel-file-upload>
       </template>
     </my-win>
@@ -152,16 +151,13 @@ import {
   ref,
   computed,
   onMounted,
-  onUpdated,
-  defineComponent,
-  reactive,
+  onUpdated, 
   watch,
-  inject,
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { authStore } from "../store/AuthStore";
-import { dcModelStore, dcDataStore, delete00 } from "../store/DCModelStore";
+
+import { dcDataStore, delete00 } from "../store/DCModelStore";
 
 //import TableLon from "./TableLon.vue";
 const TableLon = defineAsyncComponent(() => import("./TableLon.vue"));
@@ -469,7 +465,6 @@ export default {
 .dc-lon-comp {
   position: relative;
   border-radius: 4px;
-  margin-left: 22px;
 }
 
 .dccomp_body {
@@ -479,6 +474,8 @@ export default {
 .dc-btns-cont {
   display: flex;
 }
+
+
 
 .dc-btns {
   margin-left: 12px;

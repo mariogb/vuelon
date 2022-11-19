@@ -1,6 +1,6 @@
 <template>
-  <header class="header primary-dark">
-    <a href="#" class="logo logolon">VXLON</a>
+  <header class="header first">
+    <a href="#" id="logo-lon">VXLON</a>
     <div v-if="isAuth" class="menu-auth-usr">
       {{ typeLon }}
       <router-link v-if="typeLon === 'THIRD'" to="/welcomeThird" class="button"
@@ -26,7 +26,7 @@
         [Logout]
       </button>
     </div>
-    <div v-if="!isAuth" class="btn-grp-lon">
+    <div v-if="!isAuth">
       <button v-on:click="showRegOLog = 'REGISTER'">REGISTER</button>
       <button v-on:click="showRegOLog = 'LOGIN'">LOGIN</button>
     </div>
@@ -45,7 +45,7 @@
   <div v-if="isAuth" class="chats0" v-bind:class="{ 'chats-min': chatMin }">
     <simple-chat v-bind:channel="'wrtc'" v-bind:channelid="1"></simple-chat>
   </div>
-  <footer class="footer primary-dark">
+  <footer class="footer first">
     <div>
       <div v-show="showConfigBack">
         <button v-on:click="enableHttpSchema(true)">HTTPS</button>
@@ -68,7 +68,13 @@
   </footer>
 </template>
 <script  lang="ts">
-import { ref, computed, defineComponent, defineAsyncComponent } from "vue";
+import {
+  ref,
+  computed,
+  defineComponent,
+  defineAsyncComponent,
+  onMounted,
+} from "vue";
 
 import { authStore } from "./store/AuthStore";
 import AuthLon from "./components/AuthLon.vue";
@@ -114,6 +120,7 @@ export default defineComponent({
       return authStore.getState().parsedJWT["typeLon"];
     });
 
+
     return {
       doLogout,
       isAuth: computed(() => {
@@ -138,21 +145,12 @@ export default defineComponent({
 
 <style lang="less">
 
+@first-color: #25316D;
+@second-color: #5F6F94;
+@third-color: #97D2EC;
+@fourth-color: #FEF5AC;
 
-html,body{
-  margin: 0;
-  padding: 0;
-}
-
-@first-color: #3F7CAC;
-@second-color: #95AFBA;
-@third-color: #BDC4A7;
-@fourth-color: #D5E1A3;
-
-
-@main-color: brown;
-
-@primary: #27104e;
+@primary: #42a5f5;
 @secondary: #ba68c8;
 @error: #d32f2f;
 @warning: #ed6c02;
@@ -160,124 +158,83 @@ html,body{
 @success: #2e7d32;
 @font-size-default: 16px;
 
-
 &:root {
   --first-color: @first-color;
   --second-color: @second-color;
-  --third-color: ligthen(@third-color,2%);
+  --third-color: @third-color;
   --fourth-color: @fourth-color;
 
-  --main-color: @main-color;
-
-  --primary-ligth: lighten(@primary, 15%);;
-  --primary: darken(@primary, 3%);
-  --primary-dark: darken(@primary, 30%);
-
-  --secondary-ligth: lighten(@secondary, 15%);
-  --secondary: darken(@secondary,3%);
-  --secondary-dark: darken(@secondary, 30%);
-
-  
-
-  --error-light:lighten(@error, 15%);
-  --error: @error
-  --error-dark: darken(@error, 30%);
-
-  --warning-light:lighten(@warning, 15%);
+  --primary: @primary;
+  --secondary: @secondary;
+  --error: @error;
   --warning: @warning;
-  --warning-dark: darken(@warning, 30%);
-
-  --info-light: lighten(@info, 15%);;
-  --info: @info;
-  --info-dark: darken(@info,30%);
-    
-  --success-light: lighten(@success,15%);
+  --warning-f: invert(@warning)
+  --info: @info;    
   --success: @success;
-  --success-dark: darken(@success,20%);
 
   //--table-tr-default-
-  --table-background:lighten(@third-color, 46%);
-  --table-oddrow-color: lighten(@secondary, 25%);
-  --table-current-color:darken(@third-color,2%) ;
-  --table-thead-background: darken(@secondary,20%);
+
+  --table-oddrow-color: lighten(@third-color, 20%);
+  --table-current-color: darken(@fourth-color,2%) ;
+  --table-thead-background: darken(@second-color,20%);
   --table-thead-color: lighten(spin(@third-color, 120),28%);
 
   --font-size-default:@font-size-default;
 }
 
-.primary {
-  background: var(--primary);
 
-}
-.primary-main {
-  background: var(--primary-main);
-}
-.primary-dark {
-  background: var(--primary-dark);
+.first{
+  background: var(--first-color);
   color: #fff;
 }
+
+.second{
+  background: var(--second-color);
+  color: rgb(0, 0, 0);
+}
+
+.second-l{
+  background: lighten(@third-color, 20%);
+  color: rgb(0, 0, 0);
+}
+
+
+.third{
+  background: var(--third-color);
+  color: rgb(0, 0, 0);
+}
+
+.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
 .secondary {
   background: var(--secondary);
 }
-.secondary-main {
-  background: var(--secondary-main);
-}
-.secondary-dark {
-  background: var(--secondary-dark);
-  color: #fff;
-}
-.error-light {
-  background: var(--error-light);
-}
-.error-main {
-  background: var(--error-main);
-}
-.error-dark {
-  background: var(--error-dark);
-}
-.warning-light {
-  background: var(--warning-light);
-}
-.warning-main {
-  background: var(--warning-main);
-}
-.warning-dark {
-  background: var(--warning-dark);
-}
-.info-light {
-  background: var(--info-light);
-}
-.info-main {
-  background: var(--info-main);
-}
-.info-dark {
-  background: var(--info-dark);
-}
-.success-light {
-  background: var(--success-light);
-}
-.success-main {
-  background: var(--success-main);
-}
-.success-dark {
-  background: var(--success-dark);
+
+.error{
+  background: var(--error);
 }
 
-h1 {
-  font-size: 24px;
+.warning {
+  background: var(--warning);
+  color: var(--warning-f);
 }
-h2 {
-  font-size: 22px;
+
+.info {
+  background: var(--info);
 }
-h3 {
-  font-size: 20px;
+
+.success {
+  background: var(--success);
 }
-h4 {
-  font-size: 18px;
+
+#logo-lon {
+  background: var(--primary);
+  color: #fff;
 }
-small {
-  font-size: 10px;
-}
+
 option {
   &:checked {
     text-decoration-color: #6721ff;
@@ -297,14 +254,13 @@ option {
   }
 }
 &:focus {
-  background: var(--info-light);
-  color: #173000;
+  background: var(--info);
+  color: var(--warning);
   box-shadow: 0 0 5px #03e9f4, 2px 0 25px #03f403, 0 0 35px #831ec7,
     0 0 75px #f40303;
 }
 #app {
   margin: 0;   
-  font-size: var(--font-size-default);
   display: grid;
   grid-template-areas: 
   'header'
@@ -419,13 +375,9 @@ option {
 
 .menu-auth-usr {
   display: inline-block;
-  background: var(--pri);
   width: 100%;
 }
-.logolon {
-  background: var(--second-color);
-  
-}
+
 
 
 

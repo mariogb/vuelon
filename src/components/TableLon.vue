@@ -335,7 +335,6 @@ export default {
     white-space: nowrap;
     border-collapse: separate;
     border-spacing: 1px;
-    background: var(--table-background);
     thead {
       th {
         position: sticky;
@@ -431,7 +430,7 @@ export default {
   text-align: center;
 
   button {
-    background: var(--primary-ligth);
+    background: var(--primary);
     border: 0;
     border-radius: 12px;
   }
@@ -448,7 +447,6 @@ export default {
 }
 
 span.tlon-pkey {
-  background: var(--secondary);
   margin-right: 12px;
   padding: 2px;
 }

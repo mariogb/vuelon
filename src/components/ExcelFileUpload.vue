@@ -152,11 +152,11 @@ export default defineComponent({
 </script> 
 <style>
 .the-form-box {
-  padding: 12px;
-  margin: 12px;
-  border: groove;
-  border-radius: 7px;
-  background: rgba(1, 10, 100, 0.25);
+    z-index: 8100;
+    margin-top: 6px;
+    margin-right: 32px;
+    margin-left: 29px;
+    margin-bottom: 19px;
 }
 .template-xls {
   padding: 12px;

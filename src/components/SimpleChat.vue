@@ -98,7 +98,7 @@
     <div>WS://{{ props0.channel }}/{{ props0.channelid }}</div>
    
     <div class="msg-box">
-      <div v-for="(m, idx) in losMsgs" :key="('m_' + idx)" class="msg">
+      <div v-for="(m, idx) in losMsgs" :key="(('m_' + idx))" class="msg">
         <small class="msg-usr">{{ m.from_username }}</small> {{ m.text }}
         <div class="msg-time">{{ m.d.getHours() }}:{{ m.d.getMinutes() }}</div>
       </div>
@@ -113,7 +113,7 @@
         <div v-bind:key="('u-' + uid)">
           {{ u.from_username }}
           <web-real-lon
-            v-bind:to_uid="uid + ''"
+            v-bind:to_uid="(Number(uid) + '')"
             v-bind:channel="props0.channel"
             v-bind:channelid="props0.channelid"
           ></web-real-lon>

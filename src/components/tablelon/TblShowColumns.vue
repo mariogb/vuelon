@@ -204,8 +204,7 @@ export default defineComponent({
 </script>
 
 <style>
-.menu-cols-tbl {
-  font-size: 0.9rem;
+.menu-cols-tbl {  
   display: inline;
   background: rgba(200, 200, 200, 0.1);
 }

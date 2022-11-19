@@ -1,13 +1,13 @@
 
 <template lang="pug">
 .form-box(v-show="myUI[subWin] === true" v-bind:class="'form-box-'+subWin")   
-  .wd-head.primary-dark 
+  .wd-head.first 
     span.action {{label}}     
     .wd-btns     
        button(v-on:click="ui.showBody=!ui.showBody") &DownArrowBar;&UpArrowBar;
        button(v-on:click="fnCb(subWin)") X
     
-  div(v-show="ui.showBody===true")
+  div.wd-body.second-l(v-show="ui.showBody===true")
     slot(name="content0")
   
 </template>
@@ -39,20 +39,24 @@ export default defineComponent({
 <style>
 
 .form-box {
-  background: rgba(204, 204, 204, 0.54);  
-  border-radius: 6px;
-  z-index: 8100;
-  box-shadow: 2px 2px 3px #222;
+   z-index: 8100;
   margin-top: 6px;
-  margin-right: 32px;;
+  margin-right: 32px;
+  margin-left:32px;
+  margin-bottom: 12px;
+  box-shadow: 2px 2px 3px;
 }
 
 .wd-head {    
   margin: 0;
-  padding: 4px;
-  margin-bottom: 8px;;
-  box-shadow: 3px 3px 3px black;
+  height: 1.5em;
 }
+.wd-body {    
+  margin: 0;
+  padding: 12px;
+  margin-bottom: 8px;;
+}
+
 .wd-btns{
   float: right;
 }

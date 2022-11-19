@@ -1,12 +1,12 @@
 const path = require("path");
-const ts = require("ts-loader");
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack');
-const { createHtmlTagObject } = require("html-webpack-plugin");
+
 
 const opts = {
   DEBUG: true,
@@ -44,12 +44,12 @@ module.exports = (env = {}) => ({
   module: {
     rules: [
 
-      {
-        test: /\.png$/,
-        use: [{
-          loader: 'url-loader'
-        }]
-      },
+      // {
+      //   test: /\.png$/,
+      //   use: [{
+      //     loader: 'url-loader'
+      //   }]
+      // },
       {
         test: /\.pug$/,
         use: [{ loader: 'pug-plain-loader' }]
@@ -82,10 +82,8 @@ module.exports = (env = {}) => ({
           'less-loader'
         ]
       },
-      
 
-
-      { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|html|ico)$/, loader: "asset/resource" }
+    //  { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|html|ico)$/, loader: "assets/resource" }
     ]
   },
   plugins: [
@@ -100,11 +98,20 @@ module.exports = (env = {}) => ({
       // __VUE_OPTIONS_API__ : env.prod ? true:false
     }),
     new HtmlWebpackPlugin({
+
       title: 'LON ON DC DEV',
-      templateContent: `<div id="app"></div>`,
+      template: './src/index.html',
+ 
+      // templateContent: `<body>
+      // <script async src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+      // <div id="app"></div></body>`,
       meta: {
-        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
-      }
+        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+        autor: 'Mario Garcia Burgos'        
+      },
+
+      
+      
 
 
 

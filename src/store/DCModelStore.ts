@@ -460,12 +460,12 @@ interface EntrySavedDcErrorObject {
     [key: string]: SavedDcErrorObject
 }
 
-interface CurrentItem {
+export interface CurrentItem {
     item: { id: number, pkey: string },
     objKey: string
 }
 
-interface EntryCurrentItem {
+export interface EntryCurrentItem {
     [key: string]: CurrentItem | undefined
 
 }

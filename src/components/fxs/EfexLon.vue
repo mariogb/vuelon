@@ -1,5 +1,5 @@
 <template>
-  <div class="efex">
+  <div class="efex first">
     <div style="--i: 0">
       <div style="--i: 1">
         <div style="--i: 2">
@@ -105,7 +105,6 @@ div.efex {
   width: 100vw;
   height: 100vh;
   position: absolute;
-  background: var(--primary-dark);
   z-index: 2;
 }
 </style>
