@@ -24,6 +24,12 @@ También cuenta con una implementación para realizar comunicación P2P entre na
 > npm run start
 
 ```
+#Esquema de componentes
+
+![Esquema de componentes!](https://sketchviz.com/@mariogb/70a85df9fe84ca733dfcece825846bc0/cad238c5f84ed4cf99bc089e4a616e28992629c5.png "Esquema Componentes")
+
+
+
 
 
 
