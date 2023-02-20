@@ -63,6 +63,10 @@ export default defineComponent({
       return props.pn;
     });
 
+    const objKey = computed(() => {
+      return props.objKey;
+    });
+
     const ppc = computed(() => {
       const v = dcModelStore.getState().mapa[props.dc];
       if (v !== undefined) {
@@ -95,9 +99,7 @@ export default defineComponent({
       return l_;
     });
 
-    const objKey = computed(() => {
-      return props.objKey;
-    });
+
 
     const ldco00: Ref<LDCObject | any> = ref({});
     const idxSelect = ref(-1);

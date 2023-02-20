@@ -6,23 +6,22 @@
     ) change
   .h2
   .c1
-    template(v-if="modeloDC1")
-      h3 {{ losDcs.dcpn1 }}
-      DCLon(v-bind:dc="modeloDC1.dc", v-bind:objKey="'m_' + losDcs.dcpn1")
+    template(v-if="modeloDC1")      
+      DCLon(v-bind:title=" losDcs.dcpn1", v-bind:dc="modeloDC1.dc", v-bind:objKey="'m_' + losDcs.dcpn1")
 
   .c2
-    template(v-if="modeloDC2")
-      h3 {{ losDcs.dcpn2 }}
-      DCLon(v-bind:dc="modeloDC2.dc", v-bind:objKey="'m_' + losDcs.dcpn2")
+    template(v-if="modeloDC2")      
+      DCLon(v-bind:title=" losDcs.dcpn2",v-bind:dc="modeloDC2.dc", v-bind:objKey="'m_' + losDcs.dcpn2")
 .ar-1  
-    button(v-on:click="chView='c3'" ) c3
-    button(v-on:click="chView='c4'" ) c4
+  h4.h4 {{ losDcs.dcch }}  
+  button(v-on:click="chView='c3'" ) Listado
+  button(v-on:click="chView='c4'" ) Matriz
 .cmxm-ch  
-
+  
   .c3(v-show="chView==='c3'")
     template(v-if="vv")
-      h4 {{ losDcs.dcch }}
       DCLon(
+        v-bind:title="losDcs.dcch"
         v-bind:dc="losDcs.dcch",
         v-bind:objKey="'m_dcch_' + losDcs.dcch",
         v-bind:parentDc="modeloDC1.dc",
@@ -65,7 +64,7 @@ export default defineComponent({
   setup(props, context) {
     const route = useRoute();
 
-  const chView = ref("c4")
+  const chView = ref("c3")
 
     const losDcs = computed(() => {
       return {
@@ -210,8 +209,8 @@ export default defineComponent({
 </script> 
 <style>
 .cmxm {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: block;
+  grid-template-columns: 0.5fr 0.5fr;
   grid-template-rows: 0.1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
@@ -228,6 +227,23 @@ export default defineComponent({
 .h2 {
   grid-area: h2;
 }
+
+h3.h31{
+  margin: 0;
+background: #6c024c;
+color: #e4e417;
+}
+h3.h32{
+  margin: 0;
+background: #6c024c;
+color: #e4e417;
+}
+h4.h4{
+  margin: 0;
+background: #6c024c;
+color: #e4e417;
+}
+
 
 .c1 {
   grid-area: c1;
@@ -281,12 +297,6 @@ export default defineComponent({
   background: rgba(20, 223, 233, 0.34);
 }
 
-.mxm1 {
-  width: 100%;
-  table-layout: fixed;
-}
 
-table.mxm1 tr {
-  vertical-align: top;
-}
+
 </style>

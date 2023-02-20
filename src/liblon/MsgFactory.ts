@@ -177,33 +177,33 @@
 ,baseTimePeriod:"baseTimePeriod"
 ,program:"program"         
     }  ,
-    contractOut:{
-     dcMsg:"contractOut"
-, lDcMsg:"contractOuts"
+    purchaseContract:{
+     dcMsg:"purchaseContract"
+, lDcMsg:"purchaseContracts"
 ,pkey:"pkey"
 ,pname:"pname"
 ,departamentBaseTimePeriod:"departamentBaseTimePeriod"
 ,thirdPerson:"thirdPerson"         
     }  ,
-    contractIn:{
-     dcMsg:"contractIn"
-, lDcMsg:"contractIns"
+    saleContract:{
+     dcMsg:"saleContract"
+, lDcMsg:"saleContracts"
 ,pkey:"pkey"
 ,pname:"pname"
 ,programBaseTimePeriod:"programBaseTimePeriod"
 ,thirdPerson:"thirdPerson"         
     }  ,
-    comercialDocumentTypeOut:{
-     dcMsg:"comercialDocumentTypeOut"
-, lDcMsg:"comercialDocumentTypeOuts"
+    saleType:{
+     dcMsg:"saleType"
+, lDcMsg:"saleTypes"
 ,pkey:"pkey"
 ,afectStock:"afectStock"
 ,pname:"pname"
 ,         
     }  ,
-    comercialDocumentTypeIn:{
-     dcMsg:"comercialDocumentTypeIn"
-, lDcMsg:"comercialDocumentTypeIns"
+    purchaseType:{
+     dcMsg:"purchaseType"
+, lDcMsg:"purchaseTypes"
 ,pkey:"pkey"
 ,afectStock:"afectStock"
 ,pname:"pname"
@@ -248,19 +248,23 @@
      dcMsg:"paymentOut"
 , lDcMsg:"paymentOuts"
 ,pkey:"pkey"
+,quantity:"quantity"
 ,paymentOutForm:"paymentOutForm"
-,comercialDocumentOut:"comercialDocumentOut"         
+,purchase:"purchase"
+,outAccount:"outAccount"         
     }  ,
     paymentIn:{
      dcMsg:"paymentIn"
 , lDcMsg:"paymentIns"
 ,pkey:"pkey"
+,quantity:"quantity"
 ,paymentInForm:"paymentInForm"
-,comercialDocumentIn:"comercialDocumentIn"         
+,sale:"sale"
+,inAccount:"inAccount"         
     }  ,
-    comercialDocumentOut:{
-     dcMsg:"comercialDocumentOut"
-, lDcMsg:"comercialDocumentOuts"
+    purchase:{
+     dcMsg:"purchase"
+, lDcMsg:"purchases"
 ,pkey:"pkey"
 ,createdDate:"createdDate"
 ,documentDate:"documentDate"
@@ -268,13 +272,13 @@
 ,pname:"pname"
 ,status:"status"
 ,supplyDate:"supplyDate"
-,contract:"contract"
+,purchaseContract:"purchaseContract"
 ,userAutor:"userAutor"
-,comercialDocumentType:"comercialDocumentType"         
+,purchaseType:"purchaseType"         
     }  ,
-    comercialDocumentIn:{
-     dcMsg:"comercialDocumentIn"
-, lDcMsg:"comercialDocumentIns"
+    sale:{
+     dcMsg:"sale"
+, lDcMsg:"sales"
 ,pkey:"pkey"
 ,createdDate:"createdDate"
 ,documentDate:"documentDate"
@@ -282,9 +286,9 @@
 ,pname:"pname"
 ,status:"status"
 ,supplyDate:"supplyDate"
-,contract:"contract"
+,saleContract:"saleContract"
 ,userAutor:"userAutor"
-,comercialDocumentType:"comercialDocumentType"         
+,saleType:"saleType"         
     }  ,
     productType:{
      dcMsg:"productType"
@@ -324,26 +328,26 @@
 ,description:"description"
 ,fastKey:"fastKey"
 ,pname:"pname"
+,price:"price"
 ,sku:"sku"
+,taxPorcent:"taxPorcent"
 ,productType:"productType"         
     }  ,
     invoiceLineIn:{
      dcMsg:"invoiceLineIn"
 , lDcMsg:"invoiceLineIns"
 ,pkey:"pkey"
+,askDate:"askDate"
 ,askQuantity:"askQuantity"
 ,createdDate:"createdDate"
-,descount:"descount"
-,invoiceDate:"invoiceDate"
+,descountPorcent:"descountPorcent"
 ,orden:"orden"
+,price:"price"
 ,status:"status"
 ,supplyDate:"supplyDate"
 ,supplyQuantity:"supplyQuantity"
 ,taxPorcent:"taxPorcent"
-,total:"total"
-,totalCost:"totalCost"
-,unitCost:"unitCost"
-,comercialDocument:"comercialDocument"
+,purchase:"purchase"
 ,product:"product"
 ,stockRackProduct:"stockRackProduct"         
     }  ,
@@ -351,19 +355,17 @@
      dcMsg:"invoiceLineOut"
 , lDcMsg:"invoiceLineOuts"
 ,pkey:"pkey"
+,askDate:"askDate"
 ,askQuantity:"askQuantity"
 ,createdDate:"createdDate"
-,descount:"descount"
-,invoiceDate:"invoiceDate"
+,descountPorcent:"descountPorcent"
 ,orden:"orden"
+,price:"price"
 ,status:"status"
 ,supplyDate:"supplyDate"
 ,supplyQuantity:"supplyQuantity"
 ,taxPorcent:"taxPorcent"
-,total:"total"
-,totalCost:"totalCost"
-,unitCost:"unitCost"
-,comercialDocument:"comercialDocument"
+,sale:"sale"
 ,product:"product"
 ,stockRackProduct:"stockRackProduct"         
     }  ,
@@ -377,7 +379,7 @@
 ,startHour:"startHour"
 ,startMinute:"startMinute"
 ,weekDay:"weekDay"
-,contract:"contract"
+,purchaseContract:"purchaseContract"
 ,workSpace:"workSpace"
 ,departamentJobInstance:"departamentJobInstance"         
     }  ,
@@ -453,6 +455,33 @@
 ,pkey:"pkey"
 ,pname:"pname"
 ,formLon:"formLon"         
+    }  ,
+    alumno:{
+     dcMsg:"alumno"
+, lDcMsg:"alumnos"
+,pkey:"pkey"
+,activo:"activo"
+,pname:"pname"
+,primer_apellido:"primer_apellido"
+,segundo_apellido:"segundo_apellido"
+,         
+    }  ,
+    materia:{
+     dcMsg:"materia"
+, lDcMsg:"materias"
+,pkey:"pkey"
+,activo:"activo"
+,pname:"pname"
+,         
+    }  ,
+    calificacion:{
+     dcMsg:"calificacion"
+, lDcMsg:"calificacions"
+,pkey:"pkey"
+,calificacion:"calificacion"
+,fecha:"fecha"
+,alumno:"alumno"
+,materia:"materia"         
     }  
     }
     export default function () {

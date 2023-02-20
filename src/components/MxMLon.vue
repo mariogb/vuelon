@@ -1,9 +1,7 @@
 <template lang="pug">
 .mxm-lon
-  h2 *{{ dc }}
   h3.current-parent-dc {{ parentOnRelation }} - {{ currentParentDcItem.pkey }}
   h4 **parentOnRelation2*{{ parentOnRelation2 }}
-  small {{ objKey }}
   table.mxmm(v-if="m_dcP2 && m_dcP2.l && m_dcP1 && m_dcP1.l && mapXXX")
     thead
       tr
@@ -12,7 +10,7 @@
         th {{ dc }}
 
     tbody 
-      tr(v-for="e2 in m_dcP2.l", :key="'f' + e2.id")
+      tr(v-for="e2 in m_dcP2.l", :key="'f_' + e2.id")
         td {{ e2['pkey'] }}
         td {{ e2['pname'] }}
         td 
@@ -163,7 +161,7 @@ export default defineComponent({
         dc: dc.value,
       };
 
-      console.log(payload);
+      
       dcDataStore
         .doSave2(payload)
         .then((r) => {
@@ -209,5 +207,8 @@ export default defineComponent({
 }
 table.mxmm {
   width: 100%;
+  white-space: nowrap;
+  border-collapse: separate;
+  border-spacing: 1px;
 }
 </style>

@@ -8,6 +8,8 @@ span {{ item0 }}
         button.set-dc(v-on:click="setElDc(dck)") {{ dck }}
 
   div(v-if="mmDc !== undefined && mmDc.ps !== undefined") 
+    .info00 
+      p hasMembersShips:{{ hasMembersShips }}
     .form
       table
         tr 
@@ -54,7 +56,10 @@ span {{ item0 }}
               span {{elMapa[e_otm2.t]['mto']}}
             p 
               strong MTO2:   
-              span {{elMapa[e_otm2.t]['mto2']}}              
+              span {{elMapa[e_otm2.t]['mto2']}}       
+            p 
+              strong MTO3:   
+              span {{elMapa[e_otm2.t]['mto3']}}          
             hr
 
 
@@ -86,6 +91,60 @@ export default defineComponent({
         return a > b ? 1 : -1;
       });
     });
+
+
+
+
+    const hasMembersShips = computed(() =>{
+      
+      const mResp = {levelD:0,levelP:0}
+      if (elDc.value) {    
+          const mmM = dcModelStore.getState().mapa
+          const m = mmM[elDc.value];
+          const mto = m.mto
+          if(mto===undefined || mto===null || mto.length<1){               
+               return mResp
+          }          
+          mto.forEach((e)=>{              
+              if(e.t==="departamentBaseTimePeriod"){
+                mResp.levelD=1                                
+              }
+              if(e.t==="programBaseTimePeriod"){
+                mResp.levelP=1                                
+              }
+          })
+          const mto2 = m.mto2
+          if(mto2===undefined || mto2===null || mto2.length<1){
+            return mResp;
+          }
+          mto2.forEach((e)=>{
+            
+            if(e.t==="departamentBaseTimePeriod"){
+                 mResp.levelD=2                               
+            }
+            if(e.t==="programBaseTimePeriod"){
+                mResp.levelP=2                                
+              }
+          });   
+          const mto3 = m.mto3
+          if(mto3===undefined || mto3===null || mto3.length<1){
+            return mResp;
+          }
+          mto3.forEach((e)=>{
+            
+            if(e.t==="departamentBaseTimePeriod"){
+                 mResp.levelD=3                            
+            }
+            if(e.t==="programBaseTimePeriod"){
+                 mResp.levelP=3                            
+            }
+
+
+          });               
+
+      }
+      return mResp;
+    })
 
     const elDc = ref("");
     const mmDc = computed(() => {
@@ -155,7 +214,7 @@ export default defineComponent({
       mmDc,
       setElDc,
       item0,
-      doSave0,elMapa
+      doSave0,elMapa,hasMembersShips
     };
   },
 });
@@ -179,5 +238,8 @@ export default defineComponent({
   font-size: 0.8em;
   background: rgb(175, 248, 141);
   margin-bottom: 1px;;
+}
+.otm{
+  background: palegreen;
 }
 </style>

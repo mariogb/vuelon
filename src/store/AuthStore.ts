@@ -67,7 +67,7 @@ class AuthStore extends Store<AuthLon>{
         this.updateAccessToken(null)
     }
     doLogin(username: string, password: string): Promise<any> {
-
+      
         const h: string = `${uLibLon.httpSchema()}://${uLibLon.backEnd()}/login`
         const s0 = this
         return new Promise((resolve, reject) => {

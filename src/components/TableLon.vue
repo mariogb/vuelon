@@ -1,11 +1,6 @@
 <template lang="pug">
 .table-lon(v-if="modelo !== undefined")
-  .total-rows(v-if="m_dc !== undefined")
-    span Total {{ m_dc.total }}
-
-  .tbl-container
-    .cc(v-if="showTable !== true")
-      button(v-on:click="add()", style="display: block; margin: 0 auto") Agregar nuevo
+  .tbl-container 
     table.tbl-lon(v-if="showTable")
       thead
         tr
@@ -86,14 +81,17 @@
             | {{ idx + 1 + (currentPage - 1) * maxPag }}
           // 2 first
           template(v-if="visibleFields['pkey'] !== false")
-            th.th-pkey(
+            th.th-pkey.th-pkey-v(
               v-bind:class="[dc + '_pkey', 'pkey']",
               v-bind:data-label="msgUI(dc + '_pkey')"
             )
-              span.pkey {{ e0['pkey'] }}
+                a(
+                  v-bind:href="'#/w/simpledc/' + dc + '/' + e0['id']"
+                ) 
+                  span.pkey {{ e0['pkey'] }}
           // pc    
           template(v-if="elPc && visibleFields[elPc] !== false")
-            th.th-pc(
+            th.th-pc.th-pc-v(
               v-bind:class="[dc + '_' + elPc, elPc]",
               v-bind:data-label="msgUI(dc + '_' + elPc)"
             )
@@ -116,11 +114,13 @@
                 v-if="p000.dc0.n !== parentOnRelation && visibleFields[p000.dc0.n] !== false",
                 v-bind:data-label="p000.dc0.n"
               )
-                span.tlon-pkey
-                  | {{  e0[p000.dc0.n + &quot;_pkey&quot;]  }}
-                span(v-if="p000.dc0.pc !== undefined")
-                  |
+                span(v-if="p000.dc0.pc !== undefined") 
                   | {{  e0[p000.dc0.n + &quot;_&quot; + p000.dc0.pc]  }}
+                a(
+                  v-bind:href="'#/w/simpledc/' + p000.dc0.t + '/' + e0[p000.dc0.t + '_id']"
+                ) 
+                  span.tlon-pkey
+                    | {{  e0[p000.dc0.n + &quot;_pkey&quot;]  }}
           model-otms(v-bind:modelo="modelo")
             template(v-slot:body="p000")
               td.td-otm(
@@ -129,7 +129,6 @@
                 v-bind:key="'tt' + p000.dcp",
                 v-bind:data-label="p000.dc0.n"
               ) 
-           
                 TdsZtat(
                   v-bind:objKey="objKey",
                   v-bind:dc="p000.dc0.t",
@@ -146,7 +145,9 @@
               button(v-on:click="edit(e0.id)") Edt
               button(v-on:click="delete0(e0)") Del
               input(type="checkbox")
-  span(v-if="numPages > 0") Pagina {{ currentPage }} de {{ numPages }}
+  .total-rows(v-if="m_dc !== undefined")
+    span Total {{ m_dc.total }}
+    span(v-if="numPages > 0") Pagina {{ currentPage }} de {{ numPages }}
 </template>
 
 <script>
@@ -321,6 +322,9 @@ export default {
   padding-right: 6px;
 }
 
+.total-rows span {
+  margin-right: 4px;
+}
 .min-width() {
   min-width: 92px;
 }
@@ -329,12 +333,12 @@ export default {
   overflow: auto;
   max-width: 100vw;
   padding-bottom: 18px;
-  
 
   .tbl-lon {
     white-space: nowrap;
     border-collapse: separate;
     border-spacing: 1px;
+    width: 97%;
     thead {
       th {
         position: sticky;
@@ -363,7 +367,6 @@ export default {
       left: 64px;
       z-index: 8;
     }
-
     tr {
       &:nth-child(2n) {
         background: var(--table-oddrow-color);
@@ -376,7 +379,7 @@ export default {
       left: 0;
     }
     tr.tr-current {
-      background: var(--table-current-color);
+      background: palegreen;
     }
     .tr-current {
       .th-idx {
@@ -384,7 +387,8 @@ export default {
           content: "*>";
           position: absolute;
           left: -8px;
-          background: var(--table-current-color);
+          background: rgb(65, 1, 45);
+          color: rgb(45, 226, 21);
         }
       }
     }
@@ -406,7 +410,7 @@ export default {
     }
 
     .th-idx {
-      position: sticky;
+      position: absolute;
       left: 0;
       z-index: 4;
       width: 2.5em;
@@ -422,6 +426,12 @@ export default {
       left: 32px;
       z-index: 6;
     }
+    .th-pkey-v {
+      background: rgba(204, 204, 204, 0.76);
+    }
+    .th-pc-v {
+      background: rgba(204, 204, 204, 0.76);
+    }
   }
 }
 
@@ -430,9 +440,12 @@ export default {
   text-align: center;
 
   button {
-    background: var(--primary);
-    border: 0;
-    border-radius: 12px;
+    font-size: 0.8em;
+    line-height: 1em;
+    background: linear-gradient(#79bbff, #378de5);
+    color: #25316d;
+    border: solid 1px cadetblue;
+    margin-right: 2px;
   }
 }
 

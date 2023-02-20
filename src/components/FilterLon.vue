@@ -1,9 +1,9 @@
 <template lang="pug">
 .search-1
-  span Search by property
-  auto-completer(v-on:putVal0="getacval", v-bind:dc="dc", v-bind:pn="dc", v-bind:objKey="objKey + ':' + dc")
+  span Search by property  
+  auto-completer(v-on:putval0="getacval", v-bind:dc="dc", v-bind:pn="dc", v-bind:objKey="objKey + ':' + dc")
   template(v-if="mFilter!==undefined && mFilter[dc]!==undefined")
-    div(v-for="(it0,idx) in mFilter[dc].l" :key="'fv'+dc+'_'+dc+'_'+idx")
+    .filter-item(v-for="(it0,idx) in mFilter[dc].l" :key="'fv'+dc+'_'+dc+'_'+idx")
       span(v-if="modelo.pc!=='null'") {{it0[modelo.pc]}}
       span.pkey {{it0.pkey}}
       button.rmfit(v-on:click="rmFilterVal(dc,it0)") X  
@@ -22,10 +22,10 @@ div
           auto-completer(v-on:putval0="getacval", v-bind:dc="p.t", v-bind:pn="p.n", v-bind:objKey="objKey + ':' + p.n")
 
           div.filter-items(v-if="mFilter!==undefined && mFilter[p.n]!==undefined")
-            div.filter-item(v-for="(it0,idx) in mFilter[p.n].l" :key="'fv'+dc+'_'+p.n+'_'+idx")
+            .filter-item(v-for="(it0,idx) in mFilter[p.n].l" :key="'fv'+dc+'_'+p.n+'_'+idx")
               span(v-if="p.pc!=='null'") {{it0[p.pc]}} 
               span.pkey {{it0.pkey}} 
-              button.rmfit(v-on:click="rmFilterVal(p.n,it0)") X
+              button.rmfit(v-on:click="rmFilterVal(p.n,it0)") X-
             
 
 form.filter-lon(v-if="modelo", onsubmit="return false;") 

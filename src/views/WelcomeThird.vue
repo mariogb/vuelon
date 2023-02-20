@@ -1,4 +1,5 @@
 <template lang="pug">
+h2
 button.open-mimenu(v-show="UI.showMenu!==true", v-on:click="UI.showMenu = true") LIST DCS
 
 .wel-container
@@ -6,10 +7,11 @@ button.open-mimenu(v-show="UI.showMenu!==true", v-on:click="UI.showMenu = true")
   .wel-col1(v-if="UI.showMenu === true")
     nav.mimenu 
       .mimenu-head
-        button.close-mimenu(v-on:click="UI.showMenu = false") x
+        button.close-mimenu(vs-on:click="UI.showMenu = false") x
       .abc-links 
         a(href="#/welcomeThird/docCom1/b1") | Comprar
-
+  .aaa
+    h1 h
   .wel-col2     
     router-view
 

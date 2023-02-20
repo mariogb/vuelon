@@ -1,5 +1,6 @@
 <template lang="pug">
 div
+  .err {}
   .debug
     small parentOnRelation
       | {{ parentOnRelation }}
@@ -10,7 +11,7 @@ div
         div
           h3.lb-mto(v-bind:for="'i-' + p.n") *{{ p.n }}
           p.err-undefined(
-            v-if="err0 && err0.localVerify && err0.localVerify[p.n] === 'UNDEFINED'"
+            v-if="error_ && error_.localVerify && error_.localVerify[p.n] === 'UNDEFINED'"
           )
             | This value is required
         .sch-mto
@@ -48,7 +49,8 @@ div
                     v-bind:parentDcMyName="p.n",
                     v-bind:isForSearch="true",
                     v-bind:dc="p.t",
-                    v-bind:objKey="objKey + '_' + p.n"
+                    v-bind:objKey="objKey + '_' + p.n",
+                    v-bind:title="p.n"
                   )
                   button.btn-dc-close(v-on:click="loadDCLonFinder(p.n)")
                     | DC Finder Close
@@ -78,6 +80,15 @@ div
             required="true"
           )
 
+        template(
+          v-if="error_ && error_.localVerify && error_.localVerify['pkey']"
+        ) 
+          p.error {{ error_.localVerify['pkey'] }}
+        template(
+          v-if="error_ && error_.remoteError && error_.remoteError['pkey']"
+        ) 
+          p.error {{ error_.remoteError['pkey'] }}
+
       .f-ps(v-if="elPc")
         div
           label.ps.pc
@@ -85,6 +96,14 @@ div
             span {{ elPc }}
         div 
           input(v-bind:name="'i-' + elPc", type="text", v-model="item0[elPc]")
+        template(
+          v-if="error_ && error_.localVerify && error_.localVerify[elPc]"
+        ) 
+          p.error {{ error_.localVerify[elPc] }}
+        template(
+          v-if="error_ && error_.remoteError && error_.remoteError[elPc]"
+        ) 
+          p.error {{ error_.remoteError[elPc] }}
 
       .form-lon-container
         template(
@@ -139,7 +158,16 @@ div
                       v-bind:value="tt",
                       :key="'op_' + p.n + '_' + tt"
                     )
-                      | {{ dc + '_' + p.n + '_' + tt }}
+                      span {{ dc + '_' + p.n + '_' + tt }}
+            template(
+              v-if="error_ && error_.localVerify && error_.localVerify[p.n]"
+            ) 
+              p.error {{ error_.localVerify[p.n] }}
+            template(
+              v-if="error_ && error_.remoteError && error_.remoteError[p.n]"
+            ) 
+              p.error {{ error_.remoteError[p.n] }}
+
         template(v-for="p in losPsBool", :key="'d-' + p.n")
           .f-ps
             div
@@ -153,26 +181,43 @@ div
                   v-model="item0[p.n]",
                   v-bind:name="'i-' + p.n"
                 )
+
+        template(v-for="p in losPsPw", :key="'d-' + p.n")
+          .f-ps
+            div
+              label.ps(v-bind:for="'i-' + p.n", v-bind:class="p.n")
+                span(v-if="p.rq === true")
+                span {{ p.n }}
+            div 
+              input(
+                type="password",
+                v-model="item0[p.n]",
+                v-bind:name="'i-' + p.n",
+                autocomplete="off"
+              ) 
+
     .debug 
       | {{ item0 }}
-    
+
     .error(
-      v-if="err0 && err0.remoteError",
+      v-if="error_ && error_.remoteError",
       style="background: orange; font-size: 0.8em; width: 260px; overflow: auto"
     )
-      | {{ err0.remoteError }}
+      | Err_remote {{ error_.remoteError }}
+    hr 
     .error(
-      v-if="err0 && err0.localVerify",
+      v-if="error_ && error_.localVerify",
       style="background: orange; font-size: 0.8em; width: 260px; overflow: auto"
     )
-      | {{ err0.localVerify }}
+      | {{ error_.localVerify }}
     .form-btns
       input.form-lon-submit(
         type="submit",
+        value="Guardar",
         v-bind:disable="statusSave === 'SAVING'",
         v-on:click="save()"
       )
-      input(type="reset", v-on:click="cleanF()")
+      input(type="reset", v-on:click="cleanF()", value="Limpiar forma") 
 </template>
 <script lang="ts">
 import { defineComponent, defineAsyncComponent } from "vue";
@@ -200,6 +245,7 @@ export default defineComponent({
     parentOnRelation2: String,
     editId: Number,
   },
+  emits: ["doCancel"],
 
   setup(props: any, context) {
     const {
@@ -214,6 +260,7 @@ export default defineComponent({
       parentObjKey2,
       m_dc,
       losPs,
+      losPsPw,
       losPsBool,
       currentParentDcItem,
       currentParentDcItem2,
@@ -222,7 +269,7 @@ export default defineComponent({
     const {
       item0,
       save,
-      err0,
+      error_,
       statusSave,
       getacval,
       item0Parent,
@@ -260,7 +307,7 @@ export default defineComponent({
       item0,
       save,
       objKey,
-      err0,
+      error_,
       statusSave,
       getacval,
       item0Parent,
@@ -286,6 +333,7 @@ export default defineComponent({
       putParentVal00,
       losMto,
       losPs,
+      losPsPw,
       losPsBool,
       theform,
       test_theform,
@@ -423,7 +471,7 @@ button.btn-show-form-body {
   border-radius: 8px;
 }
 .f-ps {
-  background-color: #66a3ff;
+  background: var(--form-fld-color);
 
   margin-bottom: 13px;
   border-bottom: groove;

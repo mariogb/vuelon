@@ -3,13 +3,15 @@ nav.menu-main.second
   .hover-lon-p
     button.open-menu(v-on:click="ocm('m1')") LIST DCS
     ul.menu1.mm.hover-lon-ch-sh(v-show="UI.openedMenu ==='m1'")
-      li 
-        a(href="#/w/admui" , v-on:click="clMenu()") | ADMUI
-      li 
-        a(href="#/w/elg" , v-on:click="clMenu()") | elG
+
       template(v-for="dck in ldcs", :key="'l_' + dck") 
         li.dcbtn(v-bind:class="dck")
           button(v-on:click="wgoto(dck)") {{ mimsgUI(dck) }} 
+
+      li 
+        a(href="#/w/admui" , v-on:click="clMenu()") | ADMUI
+      li 
+        a(href="#/w/elg" , v-on:click="clMenu()") | elG          
 
   .hover-lon-p
     button.open-menu(v-on:click="ocm('m2')") MXM
@@ -32,8 +34,8 @@ nav.menu-main.second
         ) {{ mimsgUI('departamentBaseTimePeriod_m_baseTimePeriod_x_departament') }} |
       li 
         router-link(
-          :to="{ name: 'mxm', params: { dcch: 'contractOut', dcpn1: 'thirdPerson', dcpn2: 'departamentBaseTimePeriod' } }", v-on:click="clMenu()"
-        ) {{ mimsgUI('contractOut_m_thirdPerson_x_departamentBaseTimePeriod') }} |
+          :to="{ name: 'mxm', params: { dcch: 'purchaseContract', dcpn2: 'thirdPerson', dcpn1: 'departamentBaseTimePeriod' } }", v-on:click="clMenu()"
+        ) {{ mimsgUI('purchase_m_thirdPerson_x_departamentBaseTimePeriod') }} |
 
 .wel-main 
     router-view

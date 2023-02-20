@@ -14,6 +14,19 @@ const backEnd = (): string => {
     return be0;
 }
 
+const crudBackEnd = ():string =>{
+    const ce0: string | null = localStorage.getItem("CRUD_BACKEND")
+    if (ce0 === null) {
+        return 'crud'
+    }
+    return ce0;
+}
+
+const putCrudBackEnd = (h:string):void =>{
+    localStorage.setItem("CRUD_BACKEND",h)
+}
+
+
 const putBackEnd = (h:string):void =>{
     localStorage.setItem("BACKEND",h)
 }
@@ -21,10 +34,10 @@ const hws0 = ():boolean =>{
     return localStorage.getItem("HTTPSCHEMA")==="true";
 }
 const httpSchema = ():string =>{        
-    return hws0()===true ? "https" : "http";
+    return hws0()===true ? "http" : "https";
 }
 const wsSchema = ():string =>{
-    return hws0()===true ? "wss" : "ws";
+    return hws0()===true ? "ws" : "wss";
 }  
 
 const setHttpSchema=(v:boolean):void =>{
@@ -34,7 +47,8 @@ const setHttpSchema=(v:boolean):void =>{
 function ULibLon(){
     //localStorage.setItem("HTTPSCHEMA","true");
     return{
-        backEnd,httpSchema,wsSchema,buildHeaders,setHttpSchema,putBackEnd
+        backEnd,httpSchema,wsSchema,buildHeaders,setHttpSchema,putBackEnd,
+        crudBackEnd,putCrudBackEnd
     }
 }
 

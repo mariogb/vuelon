@@ -79,6 +79,14 @@ export default function (props: ComponentPropLon, context: {}) {
     return props.parentOnRelation2
   })
 
+  const title = computed(() => {
+    return props.title
+  })
+
+  const elId = computed(() => {
+    return props.elId
+  })
+
 
   const putPage0 = (payload: { n: number }): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -229,6 +237,22 @@ export default function (props: ComponentPropLon, context: {}) {
   });
 
 
+  const losPsPw = computed(() => {
+    const mv = modelo.value;
+    if (!mv) {
+      return;
+    }
+    const pspw = mv.pspw;
+    if (pspw) {
+      return pspw.filter((p) => {
+        return p.setBySys === undefined;
+      })
+    }
+    return [];
+  });
+
+
+
   const losPsBool = computed(() => {
     const mv = modelo.value;
     if (!mv) {
@@ -266,8 +290,8 @@ export default function (props: ComponentPropLon, context: {}) {
     downloadExcelFile00,
     currentParentDcItem, currentParentDcItem2,
     parentOnRelation, parentOnRelation2,
-    parentObjKeyModel, parentObjKeyModel2, losPs, losPsBool,
-    parentPagData, parentPagData2, isFilterOn
+    parentObjKeyModel, parentObjKeyModel2, losPs, losPsPw,losPsBool,
+    parentPagData, parentPagData2, isFilterOn,title,elId
   }
 
 }

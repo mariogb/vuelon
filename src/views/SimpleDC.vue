@@ -2,12 +2,13 @@
 .simple-dc(
   v-bind:class="{ 'simple-dc-cols': ui.tipo === 'row', 'simple-dc-rows': ui.tipo === 'col' }"
 )
-  .col-aa
-    h2.simple-dc-head(v-bind:class="dc")
-      span.dc00 {{ msgUI(dc) }}
+  .col-aa        
     button.hm(v-on:click="ui.tipo = 'row'") r
-    button.hm(v-on:click="ui.tipo = 'col'") c    
-    d-c-lon(v-bind:dc="dc", v-bind:objKey="dc")
+    button.hm(v-on:click="ui.tipo = 'col'") c   
+    router-link( v-if="id0!==undefined"
+      :to="{ name: 'simpledc', params: { dc: dc}}",                  
+    )  to List
+    d-c-lon(v-bind:dc="dc", v-bind:elId="id0", v-bind:objKey="dc", v-bind:title="dc")
   .col-bb(v-if="modelo && modelo.otm && m_dc && m_dc.l && m_dc.l.length > 0") 
     .otm
       button(
@@ -21,8 +22,7 @@
       transition(name="fade0")
         .bx-dclon(
           v-if="currentItem !== undefined && viewOptions.showChild[p_ch.n] === true"
-        ) 
-          h3.sub-dc * {{ p_ch.n }}
+        )           
           router-link.button(
             :to="{ name: 'simpledc', params: { dc: p_ch.t } }"
           ) Ir
@@ -32,7 +32,8 @@
             v-bind:parentDc="dc",
             v-bind:parentObjKey="dc",
             v-bind:parentOnRelation="p_ch.onRelation ? p_ch.onRelation : dc",
-            v-bind:parentDcMyName="p_ch.n"
+            v-bind:parentDcMyName="p_ch.n",            
+            v-bind:title="p_ch.n "
           )
           div(v-if="modelo.otm2") 
             .otm2
@@ -52,14 +53,14 @@
                 .bx-dclon(
                   v-if="currentItem !== undefined && viewOptions.showChild[p_ch.n+':'+p_ch2.n] === true && p_ch2.from === p_ch.n && canViewMDc(dc + '_' + p_ch.n)"
                 ) 
-                  h4.sub-dc ** {{ p_ch2.n }}
                   d-c-lon(
                       v-bind:dc="p_ch2.t",
                       v-bind:objKey="dc + '_' + p_ch.n+ '_' + p_ch2.n",
                       v-bind:parentDc="p_ch.t",
                       v-bind:parentObjKey="dc + '_' + p_ch.n",
                       v-bind:parentOnRelation="p_ch2.onRelation ? p_ch2.onRelation : p_ch.t",
-                      v-bind:parentDcMyName="p_ch2.n"
+                      v-bind:parentDcMyName="p_ch2.n",
+                      v-bind:title="p_ch2.n",
                   )
 </template>
 <script lang="ts">
@@ -84,6 +85,10 @@ export default defineComponent({
     const dc = computed(() => {
       return route.params.dc;
     });
+    const id0 = computed(()=>{
+      return route.params.id0      
+    })
+
     const msgUI = inject("msgUI");
     const viewOptions = ref({ showChild: {} });
     const changeShowChild = (dcp) => {
@@ -120,13 +125,12 @@ export default defineComponent({
 
     onMounted(() => {
       console.log(
-        "%c Montado " + route.params.dc,
-        "background:green; padding:18px;"
-      );
+        "%c Montado [" + route.params.dc+"]",
+        "background:green; padding:18px;");
     });
     onUpdated(() => {
       console.log(
-        "%c Actualizado completo " + route.params.dc,
+        "%c Actualizado completo [" + route.params.dc+"]",
         "background:cyan; padding:12px;"
       );
     });
@@ -146,7 +150,7 @@ export default defineComponent({
       viewOptions,
       changeShowChild,
       msgUI,
-      ui,canViewMDc
+      ui,canViewMDc,id0
     };
   },
 });

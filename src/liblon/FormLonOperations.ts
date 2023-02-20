@@ -26,7 +26,7 @@ export default function (props: any, context: any) {
 
     const item0 = ref({});
     const item0Parent = ref({});
-    const err0 = ref({localVerify:{},remoteError:{}});
+    const error_ = ref({ localVerify: {}, remoteError: {} });
     const statusSave = ref("");
 
     const hideParentsSearch = ref({});
@@ -55,7 +55,7 @@ export default function (props: any, context: any) {
                         }
                     } else if (p.t === "String") {
                         const v = itv[p.n]
-                        if (v === undefined || v===null || v.length<1) {
+                        if (v === undefined || v === null || v.length < 1) {
                             m_verify[p.n] = "UNDEFINED";
                         }
                     }
@@ -77,7 +77,7 @@ export default function (props: any, context: any) {
         }
 
         if (Object.keys(m_verify).length > 0) {
-            err0.value['localVerify']= m_verify ;
+            error_.value['localVerify'] = m_verify;
             return;
         }
 
@@ -91,7 +91,7 @@ export default function (props: any, context: any) {
         dcDataStore
             .doSave2(payload)
             .then((r) => {
-                err0.value = {localVerify:{},remoteError:{}};
+                error_.value = { localVerify: {}, remoteError: {} };
                 console.log("obtuve ", r);
                 //clean item0
                 statusSave.value = "";
@@ -100,9 +100,25 @@ export default function (props: any, context: any) {
 
                 cleanF();
             })
-            .catch((rrr0) => {
-                if (rrr0.response) {
-                    err0.value = rrr0.response.data;
+            .catch((rerr0) => {
+                console.log("ssss")
+                if (rerr0.response) {
+                    const d = rerr0.response.data;
+                    if (d) {
+                        const vp = d.verifyProblem;
+                        if (vp) {
+                            const m = {};
+                            for (let i in vp) {
+                                const o = vp[i];
+                                if (m[o.k] === undefined) {
+                                    m[o.k] = [];
+                                }
+                                m[o.k].push(o.v);
+                            }
+                            error_.value['remoteError'] = m
+                        }
+                    }
+
                 }
                 statusSave.value = "";
             });
@@ -114,7 +130,7 @@ export default function (props: any, context: any) {
         item0.value[pn + "_id"] = payload.elem0["id"];
         item0Parent.value[pn] = payload.elem0;
         hideParentsSearch.value[pn] = true;
-        const errV = err0.value;
+        const errV = error_.value;
         if (errV) {
             if (errV["localVerify"] && errV["localVerify"][pn]) {
                 errV["localVerify"][pn] = undefined;
@@ -128,7 +144,7 @@ export default function (props: any, context: any) {
     const cleanF = () => {
         item0.value = {};
         item0Parent.value = {};
-        err0.value = {localVerify:{},remoteError:{}};
+        error_.value = { localVerify: {}, remoteError: {} };
         hideParentsSearch.value = {};
         showParentFind.value = {};
     };
@@ -275,12 +291,12 @@ export default function (props: any, context: any) {
         item0Parent.value[pn] = it0;
         hideParentsSearch.value[pn] = true;
         showParentFind.value[pn] = !showParentFind.value[pn];
-        err0.value.localVerify[pn]="";
+        error_.value.localVerify[pn] = "";
     };
     return {
         item0,
         save,
-        err0,
+        error_,
         statusSave,
         getacval,
         item0Parent,

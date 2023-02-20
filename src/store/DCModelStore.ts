@@ -5,7 +5,33 @@ import { Store } from './main'
 export interface PageData {
     elTotal: number, currentPage: number, numPages: number
 }
+export const formatPrice= (value) =>{
+    var formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+    });
+    return formatter.format(value);
+}
 
+
+export function handleError(error_response,error_item){
+    if (error_response.response) {
+      const d = error_response.response.data;
+        if (d) {
+          const vp = d.verifyProblem;
+          if (vp) {
+            const m = {};
+            for (let i in vp) {
+              const o = vp[i];
+              if (m[o.k] === undefined) {
+                m[o.k] = [];
+              }
+              m[o.k].push(o.v);
+          }            
+        error_item['value'] = m;
+      }
+    }
+  }
+}
 
 export function doPagData(m_dc0: LDCObject): PageData {
 
@@ -93,7 +119,7 @@ export const convertToLDCObject = (dc: string, data: any): LDCObject => {
 
 interface DcToSaveObject { item: { id?: Number, pkey: string }, dc: string }
 
-const h00 = `${uLibLon.httpSchema()}://${uLibLon.backEnd()}/crud`;
+const h00 = `${uLibLon.httpSchema()}://${uLibLon.backEnd()}/crud` // /pg`;
 
 export const doSaveOnMap = <T extends DcToSaveObject>(payload: T): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -122,9 +148,18 @@ export const doSaveOnMap = <T extends DcToSaveObject>(payload: T): Promise<any> 
 }
 export const doSave = <T extends DcToSaveObject>(payload: T): Promise<any> => {
     return new Promise((resolve, reject) => {
-        const h = `${h00}/${payload.dc}/s`
-        const headers: any = buildHeaders();
-        Axios.put(h, payload.item, { headers: headers, data: payload.item }).then(function (response) {
+
+        const it000  = payload.item
+        if(!it000){
+            reject({"Error":"NO ITEM"})
+        }
+
+        const h = `${h00}/${payload.dc}/`       
+        const headers: any = buildHeaders();        
+        const axFn = it000.id ? Axios.put : Axios.post;
+        const h000 = h +  (it000.id ? it000.id:"");
+        
+        axFn(h000, payload.item, { headers: headers, data: payload.item }).then(function (response) {
             resolve(response.data)
         }).catch((error) => {
 
@@ -190,7 +225,7 @@ export const downLoadFile = (payload: any): Promise<any> => {
 
     return new Promise((resolve, reject) => {
         let lp = doMyParams(payload)
-        const h = `${h00}/${payload.dc}/l?${lp.join("&")}&xlsExport=1`
+        const h = `${h00}/${payload.dc}?${lp.join("&")}&xlsExport=1`
         const headers: any = buildHeaders();
         Axios.get(h, { headers: headers, responseType: 'blob' }).then(function (response) {
 
@@ -207,7 +242,7 @@ export const downLoadFile = (payload: any): Promise<any> => {
 export const doList = (payload: any): Promise<LDCObject> => {
     console.log(payload)
     const lp = doMyParams(payload)
-    const h = `${h00}/${payload.dc}/l?${lp.join("&")}`;
+    const h = `${h00}/${payload.dc}?${lp.join("&")}`;
     return new Promise((resolve, reject) => {
         const headers: any = buildHeaders()
         Axios.get(h, { headers: headers }).then(function (response) {
@@ -235,7 +270,7 @@ export const sendFiles = (payload: any): Promise<any> => {
 }
 
 export const downLoadTemplateFile = function (payload: any): Promise<any> {
-    const h = `${h00}/${payload.dc}/l?xlsTemplate=1`
+    const h = `${h00}/${payload.dc}?xlsTemplate=1`
     return new Promise((resolve, reject) => {
         const headers: any = buildHeaders();
         Axios.get(h, { headers: headers, responseType: 'blob' }).then(function (response) {
@@ -262,7 +297,20 @@ interface SProperty {
     onForm?: string | undefined,
     max?: number | undefined,
     min?: number | undefined,
+    inZtat?:Array<string> | undefined
+}
 
+
+interface SPropertyPw {
+    n: string,
+    t: string,
+    template?: string,    
+    setBySys?: string | undefined,
+    rq?: boolean | undefined,
+    onForm?: string | undefined,
+    max?: number | undefined,
+    min?: number | undefined
+   
 }
 
 
@@ -284,7 +332,7 @@ interface SOTM {
     onRelation2?: string,
     from2?: string,
     keyPath?: string
-
+     
 }
 
 /*
@@ -296,13 +344,15 @@ export interface DCModel {
     dc: string,
     pc: string,
     ps: Array<SProperty> | undefined,
+    pspw:Array<SPropertyPw> | undefined,
     mto: Array<SMTO> | undefined,
     mto2: Array<SMTO> | undefined,
     mto3: Array<SMTO> | undefined,
 
     otm: Array<SOTM> | undefined,
     otm2: Array<SOTM> | undefined,
-    otm3: Array<SOTM> | undefined
+    otm3: Array<SOTM> | undefined,
+
 }
 interface EntryDCModel {
     [key: string]: DCModel
@@ -411,7 +461,10 @@ class DCModelStore extends Store<DCMapDCModel>{
                 s0.fillOTMFrom(m_dcm);
 
                 s0.state.mapa = m_dcm;
-                s0.state.mMUI = data.mMUI
+                if(data.mMUI){
+                    s0.state.mMUI = data.mMUI
+                }
+                
                 s0.state.permissions = data.permissions
                 //s0.state.mapa['baseTimePeriod']['autokey'] = ['base', 'timePeriod']
                 resolve(1)
@@ -567,6 +620,11 @@ class DCDataStore extends Store<MapLDCObject>{
                 }
             }
         }
+
+        if(payload.elId!==undefined){
+            params['id']=payload.elId
+        }
+
 
         if (payload.parentOnRelation !== undefined) {
             const k0 = payload.parentObjKey//payload.parentDc
@@ -760,7 +818,7 @@ class DCDataStore extends Store<MapLDCObject>{
         const s0 = this
         let fl = s0.state.filterDcs[objKey0]
         if (fl !== undefined && fl[pi] !== undefined) {
-            fl[objKey0][pi].l = fl[pi].l.filter((e) => { return e.id !== it0.id })
+            fl[pi].l = fl[pi].l.filter((e) => { return e.id !== it0.id })
         }
     }
 
@@ -827,7 +885,8 @@ export interface ComponentPropLon {
     parentObjKey?: string | undefined, parentObjKey2?: string | undefined,
     parentDcMyName?: string | undefined, parentDcMyName2?: string | undefined,
     parentOnRelation?: string | undefined, parentOnRelation2?: string | undefined,
-    max?: number | undefined, elId?: number | undefined
+    max?: number | undefined, elId?: number | undefined,
+    title?:string|undefined
 
 }
 
@@ -942,12 +1001,12 @@ class DCZtatStore extends Store<DcZtatModel>{
         const s0 = this
         const keyPath = payload['keyPath']
         const objKey = payload['objKey']
+        payload.params['count']='y'
         const lp: any[] = this.doQryStr(payload.params)
         return new Promise((resolve, reject) => {
             const headers: any = buildHeaders();
             Axios.get(h + "?" + lp.join("&"), { headers: headers }).then(function (response) {
                 
-                console.log("rrr")
                 const data: any = response.data
                 const m00: any = s0.state.mapa
                 if (m00[objKey] === undefined) {

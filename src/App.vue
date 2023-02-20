@@ -1,30 +1,42 @@
 <template>
   <header class="header first">
-    <a href="#" id="logo-lon">VXLON</a>
+    <a href="#" id="logo-lon"> LON </a>
     <div v-if="isAuth" class="menu-auth-usr">
-      {{ typeLon }}
+      
       <router-link v-if="typeLon === 'THIRD'" to="/welcomeThird" class="button"
         >Welcome THIRD</router-link
-      >|
+      >
       <router-link v-if="typeLon === 'AGENT'" to="/welcomeAgent" class="button"
         >Welcome AGENT</router-link
-      >|
+      >
 
       <router-link v-if="typeLon !== 'THIRD'" to="/w" class="button"
         >Welcome</router-link
-      >|
-      <mark
+      >
+      <mark style="margin-right:6px"
         class="username tertiary"
         v-if="elJWTParsed !== undefined && elJWTParsed !== null"
       >
-        {{ typeLon }} {{ elJWTParsed.username }}</mark
+        <span>{{ elJWTParsed.username }}</span>
+        <span>{{ typeLon }}</span>
+          </mark
       >
-      <a href="#/docCom1"> | Comprar</a>
+      <div class="rigth">
+        <a href="#/vlPurchase">vl-purchase </a> 
+        <span> | </span>
+        <a href="#/vlSale">vl-Sale </a>
 
-      <button v-on:click="chatMin = !chatMin">VC {{ chatMin }}</button>
-      <button class="button logout" v-if="isAuth === true" @click="doLogout()">
-        [Logout]
-      </button>
+        <button class="morado" v-on:click="chatMin = !chatMin">
+          Video Conferencia <small></small>
+        </button>
+        <button
+          class="button logout"
+          v-if="isAuth === true"
+          @click="doLogout()"
+        >
+          [Logout]
+        </button>
+      </div>
     </div>
     <div v-if="!isAuth">
       <button v-on:click="showRegOLog = 'REGISTER'">REGISTER</button>
@@ -68,13 +80,7 @@
   </footer>
 </template>
 <script  lang="ts">
-import {
-  ref,
-  computed,
-  defineComponent,
-  defineAsyncComponent,
-  onMounted,
-} from "vue";
+import { ref, computed, defineComponent, defineAsyncComponent } from "vue";
 
 import { authStore } from "./store/AuthStore";
 import AuthLon from "./components/AuthLon.vue";
@@ -120,7 +126,6 @@ export default defineComponent({
       return authStore.getState().parsedJWT["typeLon"];
     });
 
-
     return {
       doLogout,
       isAuth: computed(() => {
@@ -144,11 +149,10 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-
-@first-color: #25316D;
-@second-color: #5F6F94;
-@third-color: #97D2EC;
-@fourth-color: #FEF5AC;
+@first-color: #25316d;
+@second-color: #5f6f94;
+@third-color: #97d2ec;
+@fourth-color: #fef5ac;
 
 @primary: #42a5f5;
 @secondary: #ba68c8;
@@ -156,7 +160,7 @@ export default defineComponent({
 @warning: #ed6c02;
 @info: #0288d1;
 @success: #2e7d32;
-@font-size-default: 16px;
+@font-size-default: 14px;
 
 &:root {
   --first-color: @first-color;
@@ -168,38 +172,38 @@ export default defineComponent({
   --secondary: @secondary;
   --error: @error;
   --warning: @warning;
-  --warning-f: invert(@warning)
-  --info: @info;    
+  --warning-f: invert(@warning);
+  --info: @info;
   --success: @success;
 
   //--table-tr-default-
 
-  --table-oddrow-color: lighten(@third-color, 20%);
-  --table-current-color: darken(@fourth-color,2%) ;
-  --table-thead-background: darken(@second-color,20%);
-  --table-thead-color: lighten(spin(@third-color, 120),28%);
+  --table-oddrow-color: lighten(@third-color, 10%);
+  --table-current-color: darken(@fourth-color, 2%);
+  --table-thead-background: darken(@second-color, 20%);
+  --table-thead-color: lighten(spin(@third-color, 120), 28%);
 
-  --font-size-default:@font-size-default;
+  --font-size-default: @font-size-default;
+
+  --form-fld-color: lighten(@third-color, 20%);
 }
 
-
-.first{
+.first {
   background: var(--first-color);
   color: #fff;
 }
 
-.second{
+.second {
   background: var(--second-color);
   color: rgb(0, 0, 0);
 }
 
-.second-l{
+.second-l {
   background: lighten(@third-color, 20%);
   color: rgb(0, 0, 0);
 }
 
-
-.third{
+.third {
   background: var(--third-color);
   color: rgb(0, 0, 0);
 }
@@ -213,7 +217,7 @@ export default defineComponent({
   background: var(--secondary);
 }
 
-.error{
+.error {
   background: var(--error);
 }
 
@@ -233,6 +237,13 @@ export default defineComponent({
 #logo-lon {
   background: var(--primary);
   color: #fff;
+  font-size:1.32em;
+  padding: 6px;
+  margin: 7px;
+  box-shadow: -5px 4px 2px #6d2ec8;
+  border-radius: 4px;
+  font-family: Arial,sans;
+
 }
 
 option {
@@ -254,54 +265,54 @@ option {
   }
 }
 &:focus {
-  background: var(--info);
-  color: var(--warning);
+  background: #d4f0ff;
+  color: #1705f2;
   box-shadow: 0 0 5px #03e9f4, 2px 0 25px #03f403, 0 0 35px #831ec7,
     0 0 75px #f40303;
 }
 #app {
-  margin: 0;   
+  margin: 0;
+  color: #25316d;
   display: grid;
-  grid-template-areas: 
-  'header'
-  'main'
-  'footer';
-   grid-template-rows: 180pxfr 100vh 180px;
-   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: 180pxfr 100vh 180px;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
 
-.header{
+.header {
   display: flex;
   top: 0;
   grid-area: header;
   position: sticky;
   z-index: 2000;
 }
-.footer{
+.footer {
   bottom: 0;
-  z-index:2; 
+  z-index: 2;
   position: fixed;
   width: 100%;
   grid-area: footer;
 }
-.main{
+.main {
   position: relative;
   z-index: 1;
   padding-bottom: 300px;
   margin-bottom: 300px;
   grid-area: main;
 }
-.header,.footer {
-   
-  a{
-    &:visited{
+.header,
+.footer {
+  a {
+    &:visited {
       color: lighten(@third-color, 46%);
     }
-    
   }
 }
 
-.debug{
+.debug {
   background: #03e9f4;
   display: none;
 }
@@ -341,10 +352,19 @@ option {
 .hover-lon-ch-sh {
   li {
     border-bottom: 1px solid #9bb8ff;
-    
   }
 }
 
+.rigth{
+  float: right;
+}
+
+.morado{
+  background: #5f4ad2;
+  color: yellow;
+  font-family: sans;
+  font-weight: bolder;
+}
 
 .chats0 {
   position: fixed;
@@ -372,32 +392,28 @@ option {
   overflow: auto;
 }
 
-
 .menu-auth-usr {
   display: inline-block;
   width: 100%;
 }
-
-
-
+.menu-auth-usr a {
+  color: #ffc;
+}
 
 @media screen and (max-width: 600px) {
-    .main{
-      padding-bottom:100px ;
-      margin-bottom: 100px;
-    }
-    .hm{
-      display: none;
-    }
-    button{
-      font-size: 22;
-    }
-
+  .main {
+    padding-bottom: 100px;
+    margin-bottom: 100px;
+  }
+  .hm {
+    display: none;
+  }
+  button {
+    font-size: 22;
+  }
 }
 @media screen and (max-height: 600px) {
-
 }
-
 </style>
 
 

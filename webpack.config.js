@@ -99,7 +99,7 @@ module.exports = (env = {}) => ({
     }),
     new HtmlWebpackPlugin({
 
-      title: 'LON ON DC DEV',
+      title: 'LONSOFT ',
       template: './src/index.html',
  
       // templateContent: `<body>

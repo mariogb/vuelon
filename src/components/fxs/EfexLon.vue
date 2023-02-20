@@ -1,10 +1,17 @@
 <template>
   <div class="efex first">
     <div style="--i: 0">
+
+      <p style="--i: 5">Registrar, medir, conocer: Lugar x Tiempo x Evento</p>
+
       <div style="--i: 1">
+        <span>Iput/Output Software, código</span>
         <div style="--i: 2">
+          <span>Modelos, fabrica</span>
           <div style="--i: 3">
+            <p style="--i: 3">Transformación, Evolución</p>
             <div style="--i: 4">
+              <span>Conocimiento, automatización</span>
               <div style="--i: 5"></div>
             </div>
           </div>
@@ -24,7 +31,7 @@ export default defineComponent({
 </script>
 <style>
 .efex div {
-  --h: 30;
+  --h: 18;
   border: 3vmin double hsl(var(--h), 100%, 50%);
   border-radius: 2.5vmin;
   margin: 2.5vmin;
@@ -32,7 +39,7 @@ export default defineComponent({
   min-width: 15vmin;
   max-width: 100vmin;
   transform-style: preserve-3d;
-  --prefix-transform: scale(0.75);
+  --prefix-transform: scale(0.85);
 
   animation: spinner 60000ms calc(var(--i) * -7200ms - 2000ms) infinite
     alternate ease-in-out backwards;
@@ -40,18 +47,18 @@ export default defineComponent({
 
   background: radial-gradient(
     circle,
-    hsl(var(--h) 100% 50% / 0),
-    hsl(var(--h) 100% 50% / 0),
+    hsl(var(--h) 80% 20% / 0.6),
+    hsl(var(--h) 95% 30% / 0.18),
     hsl(var(--h) 100% 50% / 0.5)
   );
 }
 
 @keyframes spinner {
   0% {
-    transform: var(--prefix-transform) rotateZ(0.25turn) rotateX(0turn);
+    transform: var(--prefix-transform) rotateZ(1turn) rotateY(1turn);
   }
   100% {
-    transform: var(--prefix-transform) rotateZ(0.25turn) rotateX(10turn);
+    transform: var(--prefix-transform) rotateZ(0.25turn) rotateX(0turn);
   }
 }
 

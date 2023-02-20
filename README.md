@@ -24,17 +24,6 @@ También cuenta con una implementación para realizar comunicación P2P entre na
 > npm run start
 
 ```
-## Esquema de componentes
-
-![Esquema de componentes!](https://sketchviz.com/@mariogb/70a85df9fe84ca733dfcece825846bc0/cad238c5f84ed4cf99bc089e4a616e28992629c5.png "Esquema Componentes")
-
-
-## Interacción con el Backend
-
-![Esquema de interacción con el Backend!](https://sketchviz.com/@mariogb/3521333e92e7a7913b749f02a37665d8/3a26c07d9af48ed15abd101d84d6265a16c49499.sketchy.png "Esquema interacción con el BackEnd")
-
-
-
 
 
 

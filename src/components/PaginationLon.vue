@@ -1,5 +1,5 @@
 <template lang="pug">
-.pags(v-if="numPages > 0")  
+.pags(v-if="numPages > 1") 
   .pag-buttons
     button(v-show="1 < currentPage", v-on:click="setPage0(currentPage - 1)") Prev
     template(v-for="(pag0, idx) in lasPaginas")
@@ -12,12 +12,11 @@
       v-show="currentPage < numPages",
       v-on:click="setPage0(currentPage + 1)"
     ) Next
-  
 </template>  
 
 
 <script lang="ts" >
-import { pagination} from "../store/DCModelStore";
+import { pagination } from "../store/DCModelStore";
 
 import { computed } from "vue";
 //import { dcDataStore } from "../store/dcmodel-store";
@@ -66,24 +65,33 @@ export default {
 };
 </script>
 <style>
-
-.pags{
+.pags {
   display: flex;
   flex-direction: row;
-  }
+}
 
-span.curr{
+span.curr {
   background: rgb(190, 240, 9);
   color: black;
-  padding: 8px;;
+  padding: 8px;
 }
 .pag-buttons {
-  background: var(--tbl-h-bg);
-  color: var(--tbl-h-col);
+  background: #25316d;
+  color: red;
   padding: 6px;
+  width: 100%;
+  text-align: center;
 }
-.pag-buttons button{
+.pag-buttons span {
   margin-left: 3px;
   margin-right: 3px;
+}
+
+.pag-buttons button {
+  font-size: 0.8em;
+  line-height: 1em;
+  background: linear-gradient(#79bbff, #378de5);
+  color: #25316d;
+  border: solid;
 }
 </style>

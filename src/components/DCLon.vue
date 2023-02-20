@@ -1,5 +1,7 @@
 <template>
   <div class="dc-lon-comp">
+    <h3 class="dc-title">{{ title }}</h3>
+
     <div class="dc-btns-cont">
       <div class="show-btns">
         <button
@@ -12,6 +14,7 @@
       </div>
 
       <div class="dc-btns" v-show="responiveShowBtns === true">
+        
         <button class="btn-list" v-on:click="doList()" title="List records">
           List
         </button>
@@ -50,7 +53,7 @@
           v-on:click="downloadExcelFile('y')"
           title="Download in excel file with id info"
         >
-        Download w/Ids
+          Download w/Ids
         </button>
 
         <TblShowColumns
@@ -105,7 +108,7 @@
       v-bind:myUI="myUI"
       v-bind:fnCb="showSubWin"
       v-bind:subWin="'viewUpXlsForm'"
-      v-bind:label="'Upload from excel file '+1 "
+      v-bind:label="'Upload from excel file ' + 1"
     >
       <template v-slot:content0>
         <excel-file-upload
@@ -115,7 +118,11 @@
       </template>
     </my-win>
     <div class="dccomp_body">
-  
+      <div>
+        Tiene el id {{elId===undefined}} {{elId}}
+          <router-link v-if="elId!==undefined"  :to="{ name: 'simpledc', params: { dc: dc}}">TL</router-link>
+    
+      </div>
       <TableLon
         v-bind:dc="dc"
         v-bind:objKey="objKey"
@@ -151,7 +158,7 @@ import {
   ref,
   computed,
   onMounted,
-  onUpdated, 
+  onUpdated,
   watch,
   defineAsyncComponent,
   nextTick,
@@ -173,7 +180,7 @@ import MyWin from "./HeadSubWinLon.vue";
 
 import ops from "../liblon/OpsLon";
 import TblShowColumns from "./tablelon/TblShowColumns.vue";
-
+const subWins = ["viewForm", "viewUpXlsForm", "viewFilter"];
 export default {
   components: {
     TableLon,
@@ -198,10 +205,10 @@ export default {
     parentOnRelation2: String,
     elId: Number,
     isForSearch: Boolean,
+    title: String,
   },
 
   setup(props, context) {
-    const subWins = ["viewForm", "viewUpXlsForm", "viewFilter"];
     const responiveShowBtns = ref(true);
 
     let myEdo = "init";
@@ -224,6 +231,7 @@ export default {
       parentOnRelation2,
       parentPagData2,
       isFilterOn,
+      title,elId
     } = ops(props, context);
 
     const currentItem = computed(() => {
@@ -231,12 +239,11 @@ export default {
     });
 
     const putParentVal00_ = () => {
-      console.log("aaaa", parentDcMyName.value);
       const it0 = dcDataStore.getState().currentItems[props.objKey]["item"];
       context.emit("putParentVal00", { pn: parentDcMyName.value, item: it0 });
     };
 
-    const doList = () => {
+    const doList = () => { 
       doListGral(1).then((d) => {
         myEdo = "x";
         //loadZChi
@@ -389,14 +396,13 @@ export default {
     const editId = ref(0);
 
     const doEdt = (id) => {
-     
       myUI.value["viewForm"] = true;
       editId.value = id;
     };
 
-    const doAdd = () =>{
-      showSubWin('viewForm')
-    }
+    const doAdd = () => {
+      showSubWin("viewForm");
+    };
 
     onMounted(() => {
       console.log(
@@ -456,7 +462,9 @@ export default {
       putSort,
       laForma,
       parentPagData2,
-      isFilterOn,doAdd
+      isFilterOn,
+      doAdd,
+      title,elId      
     };
   },
 };
@@ -465,20 +473,38 @@ export default {
 .dc-lon-comp {
   position: relative;
   border-radius: 4px;
+  margin: 7px;
+  border: 2px #594d4d inset;
+  box-shadow: 2px 2px 2px;
 }
 
+.dc-title {
+  margin: 0;
+  background: #25316d;
+  padding: 4px;
+  color: #e9d10d;
+  text-shadow: 2px 2px 2px #020810;
+  font-family: times;
+  font-size: 1.42em;
+}
 .dccomp_body {
-  position: relative;  
+  position: relative;
 }
 
 .dc-btns-cont {
   display: flex;
+  background: #25316d;
 }
-
-
 
 .dc-btns {
   margin-left: 12px;
+}
+.dc-btns-cont button {
+  font-size: 0.8em;
+  line-height: 1em;
+  background:  linear-gradient(#79bbff, #378de5);
+  color: #25316d;
+  border: solid;
 }
 
 .btn-add-selected {
@@ -488,17 +514,13 @@ export default {
   color: yellow;
 }
 
-
-
 .dc-btns button:hover {
   filter: hue-rotate(45deg);
   box-shadow: 2px 1px 1px #fa00fa;
 }
 @media screen and (max-width: 600px) {
   .dc-btns-cont button {
-    font-size:20px;
+    font-size: 20px;
   }
-
 }
-
 </style>
