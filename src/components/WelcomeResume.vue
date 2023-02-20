@@ -1,9 +1,10 @@
 <template lang="pug">
 .wel-main 
   h2 LON
-  p LON es una infraestructura base de código para implementar de manera simple una aplicación lista para la nube y con capacidad de cluster
-  p Se compone de un backend rest en java y un frontend con vue que interactua con el backend
+  p LON es una infraestructura base de código para implementar de manera simple una aplicación lista para la nube y con capacidad de cluster  
+  p Se compone de un backend rest en java y un frontend con vue que interactua con el backend. 
   p Contiene los script para ejecutarse con docker composer y balanceado utilizando Nginx.
+  p Permite Videoconferencia P2P utilizando WebRTC.
   
   p El repositorio para el backend en github es
     a(href="https://github.com/mariogb/vxlon") VXLON 
@@ -13,7 +14,7 @@
   
   p  
     span El repositorio para el frontend en github es 
-    a(href="https://github.com/mariogb/vuelon") VUELON
+    a(href="https://github.com/mariogb/vuelon") VUELON  
   p  
     span El frontend implementa componentes reusables para entidades de dominio y configurables de acuerdo a sus relaciones
 
@@ -27,18 +28,26 @@
       li Descargar en excel
       li Autorización utilizando JWT (Sessionless)
 
+    p
+     img(src="https://sketchviz.com/@mariogb/3521333e92e7a7913b749f02a37665d8/3a26c07d9af48ed15abd101d84d6265a16c49499.sketchy.png")  
+
+
 hr
 
 .wel-main 
   h3 Front end
   ul
     li El frontend utiliza Vue3
-    li Implemeta componentes reusables y configurables de manera jerarquica en sus relaciónes
+    li Implemeta componentes reusables y configurables de manera jerarquica en sus relaciónes    
+
+    li 
+      p Esquema de componentes
+      img(src="https://sketchviz.com/@mariogb/70a85df9fe84ca733dfcece825846bc0/cad238c5f84ed4cf99bc089e4a616e28992629c5.png" )
 
 .wel-main 
   h3 Backend
   ul
-    li El backend funciona utiliza
+    li El backend utiliza
       a(href="https://vertx.io/") Vertx
     li Es reactivo y no bloquea las operacions I/O (Base de datos, acceso a archivos, acceso a web services)
     li Listo para funcionar en cluster
@@ -52,6 +61,8 @@ hr
       | crear, actualizar y borrar.
     li Importar y exportar a Excel
     li Transmisión de datos utilizando HTTP2/GZIP, lo que permite transmisiones de datos
+          
+     
 
 .wel-main 
   p Para obtener el token ejecutar
@@ -80,11 +91,6 @@ hr
     code 
       | curl 'https://lonpe.com.mx/crud/calificacion/delete?id=1' -X DELETE -H 'Authorization: Bearer elToken'
 
-h3 FrontEnd
-ul
-  li Este frontend esta construido con Vue3.
-  li Interfase de usuario totalemente en HTML/JS/CSS e independiente del Backend
-  li 
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
